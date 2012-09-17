@@ -1,4 +1,7 @@
+require 'goodreads-api'
+
 class UsersController < ApplicationController
+  include GoodReadsAPI
   # GET /users
   # GET /users.json
   def index
@@ -15,6 +18,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
 
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -25,6 +29,9 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
+    GoodReadsAPI.im_awesome
+    GoodReadsAPI.cool
+    GoodReadsAPI.authorize_url
 
     # respond_to do |format|
     #   format.html # new.html.erb
@@ -85,5 +92,10 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :no_content }
     end
+  end
+
+  def authorized
+    puts params
+    puts 'yup!'
   end
 end
