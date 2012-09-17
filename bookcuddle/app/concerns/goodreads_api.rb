@@ -1,16 +1,11 @@
 module API
   class Goodreads
-    attr_reader :access_token, :authorize_url
+    attr_reader :request_token, :authorize_url
   
     def initialize()
       @consumer = set_consumer
       @request_token = @consumer.get_request_token
       @authorize_url = @request_token.authorize_url
-      @access_token = ''
-    end
-  
-    def set_access_token
-      @access_token = request_token.get_access_token
     end
   
     private

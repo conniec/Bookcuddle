@@ -1,8 +1,4 @@
-require_relative '../concerns/goodreads_api.rb'
-
 class UsersController < ApplicationController
-  include API
-
   def index
     @users = User.all
   end
@@ -13,7 +9,6 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
-    @gr_connection = API::Goodreads.new
   end
 
   def edit
@@ -49,10 +44,5 @@ class UsersController < ApplicationController
     else
       render "show"
     end
-  end
-
-  def authorized
-    puts params
-    puts 'yup!'
   end
 end
