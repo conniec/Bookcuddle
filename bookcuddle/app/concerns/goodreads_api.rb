@@ -31,9 +31,9 @@ module API
       goodreads_id = doc.at_xpath("//GoodreadsResponse//user").attr('id')
       goodreads_name = doc.at_xpath("//GoodreadsResponse//name").content
 
-      goodreads_values = { :goodreads_id => goodreads_id, :name => goodreads_name }
+      goodreads_values = {'goodreads_id' => goodreads_id, 'goodreads_name' => goodreads_name}
+      #user = User.get_or_create_goodreads_user(goodreads_id, goodreads_name)
     end
-
 
     private
       def set_consumer
