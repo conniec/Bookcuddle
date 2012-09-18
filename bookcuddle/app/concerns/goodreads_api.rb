@@ -21,7 +21,7 @@ module API
     
     def user_friends(access_token, access_token_secret, user_id)
       token = set_access_token(access_token, access_token_secret)
-      @response = token.get()
+      @response = token.get('test')
     end
 
     def get_auth_user_goodreads(access_token, access_token_secret)
