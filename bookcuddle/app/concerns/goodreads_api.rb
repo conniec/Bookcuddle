@@ -1,6 +1,6 @@
 module API
   class Goodreads
-    attr_reader :request_token, :authorize_url
+    attr_reader :request_token, :authorize_url, :response
   
     def initialize
     end
@@ -15,7 +15,12 @@ module API
   
     def auth_user(access_token, access_token_secret)
       token = set_access_token(access_token, access_token_secret)
-      response = token.get('http://www.goodreads.com/api/auth_user')
+      @response = token.get('http://www.goodreads.com/api/auth_user')
+    end
+    
+    def user_friends(access_token, access_token_secret, user_id)
+      token = set_access_token(access_token, access_token_secret)
+      @response = token.get()      
     end
 
     private
