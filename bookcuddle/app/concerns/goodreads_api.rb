@@ -16,7 +16,24 @@ module API
     def auth_user(access_token, access_token_secret)
       token = set_access_token(access_token, access_token_secret)
       response = token.get('http://www.goodreads.com/api/auth_user')
+      response.body
     end
+
+    def get_user_by_goodreads(access_token, access_token_secret)
+      res = auth_user(access_token, access_token_secret)
+      doc = Nokogiri::XML(res)
+
+      goodreads_id = doc.at_xpath("//GoodreadsResponse//user").attr('id')
+      goodreads_name = doc.at_xpath("//GoodreadsResponse//name").content
+
+      begin
+        user = User.find_by(goodreads_id: goodreads_id)
+      rescue
+        user = User.new(name: goodreads_name, goodreads_id: goodreads_id)
+      end
+      #user = User.get_or_create_user(goodreads_id, goodreads_name)
+    end
+
 
     private
     def set_consumer

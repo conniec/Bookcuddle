@@ -13,6 +13,7 @@ gem 'thin'
 gem 'oauth'
 gem 'goodreads'
 gem "bcrypt-ruby", :require => "bcrypt"
+gem 'nokogiri'
 
 gem 'mongoid', '~> 3.0.2'
 
