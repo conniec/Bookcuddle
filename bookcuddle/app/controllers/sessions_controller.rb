@@ -26,14 +26,26 @@ class SessionsController < ApplicationController
       session[:access_token_token] = @access_token.token
       session[:access_token_secret] = @access_token.secret
       
-      user = @gr_connection.get_user_by_goodreads(@access_token.token, @access_token.secret)
-      if user.new_record?
-        user.save
-        #login_user(user.id)
-        redirect_to signup_path
-      else
-        #login_user(user.id)
+      user_info = @gr_connection.get_auth_user_goodreads(@access_token.token, @access_token.secret)
+
+      begin
+        user = User.find_by(goodreads_id: user_info['goodreads_id'])
+        login_user(user.id)
         redirect_to users_path
+      rescue
+        puts 'creating a new user!!!'
+        @user = User.new(name: user_info['goodreads_name'], goodreads_id: user_info['goodreads_id'])
+        @user.save
+        puts @user.inspect
+        login_user(user.id)
+        redirect_to edit_user_path(@user)
+      # if user.new_record?
+      #   user.save
+      #   #login_user(user.id)
+      #   redirect_to new_user_path
+      # else
+      #   #login_user(user.id)
+      #   redirect_to users_path
       end
     else
       flash[:notice] = "Did not authorize properly. Please try again."

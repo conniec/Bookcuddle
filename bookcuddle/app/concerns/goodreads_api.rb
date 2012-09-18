@@ -19,19 +19,15 @@ module API
       response.body
     end
 
-    def get_user_by_goodreads(access_token, access_token_secret)
+    def get_auth_user_goodreads(access_token, access_token_secret)
       res = auth_user(access_token, access_token_secret)
       doc = Nokogiri::XML(res)
 
       goodreads_id = doc.at_xpath("//GoodreadsResponse//user").attr('id')
       goodreads_name = doc.at_xpath("//GoodreadsResponse//name").content
 
-      begin
-        user = User.find_by(goodreads_id: goodreads_id)
-      rescue
-        user = User.new(name: goodreads_name, goodreads_id: goodreads_id)
-      end
-      #user = User.get_or_create_user(goodreads_id, goodreads_name)
+      goodreads_values = {'goodreads_id' => goodreads_id, 'goodreads_name' => goodreads_name}
+      #user = User.get_or_create_goodreads_user(goodreads_id, goodreads_name)
     end
 
 
