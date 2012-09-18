@@ -8,7 +8,11 @@ class UsersController < ApplicationController
   end
   
   def new
-    @user = User.new
+    if params[:user]
+      @user = User.new(:name => params[:user][:name], :goodreads_id => params[:user][:goodreads_id])
+    else
+      @user = User.new
+    end
   end
 
   def edit
@@ -19,7 +23,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_url, notice: "Thank you for signing up!"
+      redirect_to @user, notice: "Thank you for signing up!"
     else
       render "new"
     end
@@ -27,13 +31,10 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        redirect_to @user, notice: 'User was successfully updated.'
-      else
-        render "edit"
-      end
+    if @user.update_attributes(params[:user])
+      redirect_to @user, notice: 'User was successfully updated.'
+    else
+      render "edit"
     end
   end
 

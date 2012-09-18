@@ -26,8 +26,16 @@ class SessionsController < ApplicationController
       session[:access_token_token] = @access_token.token
       session[:access_token_secret] = @access_token.secret
       
-      @gr_connection.auth_user(@access_token.token, @access_token.secret)
-      redirect_to users_path
+      user_info = @gr_connection.get_auth_user_goodreads(@access_token.token, @access_token.secret)
+      
+      begin
+        @user = User.find_by(goodreads_id: user_info[:goodreads_id])
+        login_user(@user.id)
+        flash[:success] = "You have logged in successfully."
+        redirect_to @user
+      rescue
+        redirect_to signup_path(:user => user_info)
+      end
     else
       flash[:notice] = "Did not authorize properly. Please try again."
       redirect_to signup_path
@@ -35,6 +43,10 @@ class SessionsController < ApplicationController
   end
 
   private
+    def login_user(user_id)
+      session[:user_id] = user_id
+    end
+  
     def create_connection
       @gr_connection = API::Goodreads.new
     end
