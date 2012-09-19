@@ -37,18 +37,6 @@ class User
     end
 
     def self.get_or_create_goodreads_user(goodreads_id, goodreads_name)
-      #doc = Nokogiri::XML(xml)
-      #goodreads_id = doc.at_xpath("//GoodreadsResponse//user").attr('id')
-      #goodreads_name = doc.at_xpath("//GoodreadsResponse//name").content
-      begin
-        user = User.find_by(goodreads_id: goodreads_id)
-      rescue
-        user = User.new(name: goodreads_name, goodreads_id: goodreads_id)
-      end
-      user.save
-    end
-
-    def self.get_or_create_goodreads_user(goodreads_id, goodreads_name)
       begin
         user = User.find_by(goodreads_id: goodreads_id)
       rescue
