@@ -15,13 +15,31 @@ module API
   
     def auth_user(access_token, access_token_secret)
       token = set_access_token(access_token, access_token_secret)
-      @response = token.get('http://www.goodreads.com/api/auth_user')
+      response = token.get('http://www.goodreads.com/api/auth_user')
       response.body
     end
     
-    def user_friends(access_token, access_token_secret, user_id)
+    def user_info(access_token, access_token_secret, goodreads_id)
       token = set_access_token(access_token, access_token_secret)
-      @response = token.get()
+      response = token.get("http://www.goodreads.com/user/show/#{ goodreads_id }.xml", { 
+                   'key' => 'oLeXuyhixiL1lMwTsw3fw', 
+                 })
+      response.body
+    end
+    
+    # def get_user_status_updates(access_token, access_token_secret, goodreads_id)
+    #   user = user_info(access_token, access_token_secret, goodreads_id)
+    #   doc = Nokogiri::XML(user)
+    #   
+    #   status_updates = 
+    #   
+    #   connie.at_xpath("//updates//update[@type='userstatus']//action_text").content
+    # end
+
+    def compare_users(access_token, access_token_secret, goodreads_id)
+      token = set_access_token(access_token, access_token_secret)
+      response = token.get("http://www.goodreads.com/user/compare/#{ goodreads_id }.xml")
+      response.body
     end
 
     def get_auth_user_goodreads(access_token, access_token_secret)
