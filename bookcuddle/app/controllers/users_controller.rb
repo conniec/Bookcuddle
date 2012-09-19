@@ -3,8 +3,8 @@ require 'goodreads_api'
 class UsersController < ApplicationController
   include API
   
-  before_filter :authorize, :only => [:friends]
-  before_filter :create_connection, :only => [:friends]
+  before_filter :authorize, :only => [:friends, :compare]
+  before_filter :create_connection, :only => [:friends, :compare]
   
   def index
     @users = User.all
@@ -58,6 +58,11 @@ class UsersController < ApplicationController
     @user = current_user
     @friends = @gr_connection.get_user_friends(current_user.goodreads_id.to_s)
     puts @friends
+  end
+  
+  def compare
+    @user = current_user
+    @comparison = @gr_connection.get_unread_books(params[:friend_goodreads_id])
   end
   
   private

@@ -1,0 +1,14 @@
+%h1 Unread Books
+
+%table
+  %tr
+    %th
+    %th
+    %th
+  - @comparison.each do |book|
+    %tr
+      %td
+        = link_to "Start Discussion", "#"
+      %td
+      %td
+        = link_to book[:title], book[:url]

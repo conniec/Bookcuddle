@@ -3,8 +3,19 @@
 
 %p Check the server logs for the XML
 
-%ul
+%table
+  %tr
+    %th
+    %th
+    %th
+    %th
   - @friends.each do |friend|
-    %li
-      = image_tag(friend[:photo_url])
-      = link_to friend[:name], "http://goodreads.com/user/show/#{ friend[:goodreads_id] }"
+    %tr  
+      %td
+        = image_tag(friend[:photo_url])
+      %td
+        = link_to friend[:name], "#"
+      %td
+        = link_to "Goodreads Profile", "http://goodreads.com/user/show/#{ friend[:goodreads_id] }"
+      %td 
+        = link_to "Compare", "/compare/#{ friend[:goodreads_id] }"

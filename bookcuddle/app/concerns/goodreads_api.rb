@@ -44,11 +44,26 @@ module API
       
       friends_info
     end
+    
+    def get_unread_books(goodreads_id)
+      res = compare_users(goodreads_id)
+      doc = Nokogiri::XML(res)
+      
+      books = doc.xpath("//reviews//review")
 
-    def compare_users(goodreads_id)
-      token = set_access_token(@access_token, @access_token_secret)
-      response = token.get("http://www.goodreads.com/user/compare/#{ goodreads_id }.xml")
-      response.body
+      unread_books = []
+      
+      books.each do |book|
+        puts book.css('your_review rating').text
+        if book.css('your_review rating').text == 'to-read' && book.css('their_review rating').text == 'to-read'
+          unread_books << { :title => book.css('book title').text,
+                            :id => book.css('book id').text,
+                            :url => book.css('book url').text
+                          }
+        end
+      end
+      
+      unread_books
     end
 
     # def get_user_status_updates(access_token, access_token_secret, goodreads_id)
@@ -89,6 +104,12 @@ module API
       def user_friends(user_id)
         token = set_access_token(@access_token, @access_token_secret)
         response = token.get("http://www.goodreads.com/friend/user/#{ user_id }?format=xml")
+        response.body
+      end
+      
+      def compare_users(goodreads_id)
+        token = set_access_token(@access_token, @access_token_secret)
+        response = token.get("http://www.goodreads.com/user/compare/#{ goodreads_id }.xml")
         response.body
       end
   end

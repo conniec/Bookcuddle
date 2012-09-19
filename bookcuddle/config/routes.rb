@@ -5,6 +5,7 @@ Bookcuddle::Application.routes.draw do
   resources :sessions, :only => [:create, :destroy]
   
   get 'friends', to: 'users#friends', as: 'friends'  
+  get 'compare/:friend_goodreads_id', to:'users#compare', as:'compare'
   get 'signup', to: 'users#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
