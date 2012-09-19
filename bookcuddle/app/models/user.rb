@@ -8,6 +8,8 @@ class User
     field :access_token, type: String
     field :access_token_secret, type: String
 
+    has_and_belongs_to_many :discussions
+    
     attr_accessible :email, :name, :goodreads_id
 
     #attr_accessible :email, :password, :password_confirmation, :password_digest
@@ -34,18 +36,6 @@ class User
           self.password_salt = BCrypt::Engine.generate_salt
           self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
       end
-    end
-
-    def self.get_or_create_goodreads_user(goodreads_id, goodreads_name)
-      #doc = Nokogiri::XML(xml)
-      #goodreads_id = doc.at_xpath("//GoodreadsResponse//user").attr('id')
-      #goodreads_name = doc.at_xpath("//GoodreadsResponse//name").content
-      begin
-        user = User.find_by(goodreads_id: goodreads_id)
-      rescue
-        user = User.new(name: goodreads_name, goodreads_id: goodreads_id)
-      end
-      user.save
     end
 
     def self.get_or_create_goodreads_user(goodreads_id, goodreads_name)

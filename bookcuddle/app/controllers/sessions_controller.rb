@@ -28,6 +28,13 @@ class SessionsController < ApplicationController
       
       user_info = @gr_connection.get_auth_user_goodreads(@access_token.token, @access_token.secret)
 
+      #If unable to fetch user_info from Goodreads API, try again
+      if user_info.empty?
+        flash[:error] = "Error authorizing account, please try again."
+        redirect_to signup_path
+      end
+
+      #Try to fetch the existing user or prompt to create new
       begin
         @user = User.find_by(goodreads_id: user_info[:goodreads_id])
         login_user(@user.id)

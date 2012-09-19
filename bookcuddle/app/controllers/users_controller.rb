@@ -57,7 +57,12 @@ class UsersController < ApplicationController
   def friends
     @user = current_user
     @friends = @gr_connection.get_user_friends(current_user.goodreads_id.to_s)
-    puts @friends
+
+    if @friends.empty?  
+      flash[:error] = 'Failed to fetch friends'
+      puts 'Failed to fetch friends'
+      redirect_to signup_path
+    end
   end
   
   def compare
