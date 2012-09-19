@@ -18,7 +18,7 @@ class User
   
     #validates_confirmation_of :password
     validates_uniqueness_of :email
-    validates_presence_of :email
+    #validates_presence_of :email
 
     def authenticate(email, password)
         user = User.find_by(email: email)
@@ -46,5 +46,13 @@ class User
         user = User.new(name: goodreads_name, goodreads_id: goodreads_id)
       end
       user.save
+    end
+
+    def self.get_or_create_goodreads_user(goodreads_id, goodreads_name)
+      begin
+        user = User.find_by(goodreads_id: goodreads_id)
+      rescue
+        user = User.new(name: goodreads_name, goodreads_id: goodreads_id)
+      end
     end
 end

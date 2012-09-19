@@ -1,6 +1,13 @@
+require 'goodreads_api'
+
 class UsersController < ApplicationController
+  include API
+  
+  before_filter :authorize, :only => [:friends]
+  before_filter :create_connection, :only => [:friends]
+  
   def index
-      @users = User.all
+    @users = User.all
   end
 
   def show
@@ -9,7 +16,7 @@ class UsersController < ApplicationController
   
   def new
     if params[:user]
-      @user = User.new(:name => params[:user][:name], :goodreads_id => params[:user][:goodreads_id])
+      @user = User.new(:name => params[:user][:goodreads_name], :goodreads_id => params[:user][:goodreads_id])
     else
       @user = User.new
     end
@@ -46,4 +53,15 @@ class UsersController < ApplicationController
       render "show"
     end
   end
+  
+  def friends
+    @user = current_user
+    @friends = @gr_connection.get_user_friends(current_user.goodreads_id.to_s)
+    puts @friends
+  end
+  
+  private
+    def create_connection
+      @gr_connection = API::Goodreads.new(session[:access_token], session[:access_token_secret])
+    end
 end

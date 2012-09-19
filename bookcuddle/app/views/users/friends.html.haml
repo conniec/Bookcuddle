@@ -1,0 +1,10 @@
+%h1
+  = "#{ @user.name }'s Friends"
+
+%p Check the server logs for the XML
+
+%ul
+  - @friends.each do |friend|
+    %li
+      = image_tag(friend[:photo_url])
+      = link_to friend[:name], "http://goodreads.com/user/show/#{ friend[:goodreads_id] }"

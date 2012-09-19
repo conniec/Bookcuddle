@@ -21,13 +21,13 @@ class SessionsController < ApplicationController
   def authorized
     if params[:authorize] == '1'
       @request_token = session[:request_token]
-
       @access_token = @request_token.get_access_token
-      session[:access_token_token] = @access_token.token
+      
+      session[:access_token] = @access_token.token
       session[:access_token_secret] = @access_token.secret
       
       user_info = @gr_connection.get_auth_user_goodreads(@access_token.token, @access_token.secret)
-      
+
       begin
         @user = User.find_by(goodreads_id: user_info[:goodreads_id])
         login_user(@user.id)
@@ -40,6 +40,10 @@ class SessionsController < ApplicationController
       flash[:notice] = "Did not authorize properly. Please try again."
       redirect_to signup_path
     end
+  end
+
+  def login_user(user_id)
+    session[:user_id] = user_id
   end
 
   private
