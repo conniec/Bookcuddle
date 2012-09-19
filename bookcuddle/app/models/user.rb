@@ -8,6 +8,8 @@ class User
     field :access_token, type: String
     field :access_token_secret, type: String
 
+    has_and_belongs_to_many :discussions
+    
     attr_accessible :email, :name, :goodreads_id
 
     #attr_accessible :email, :password, :password_confirmation, :password_digest
