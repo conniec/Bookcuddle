@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+%html 
+  %head
+    %title Bookcuddle
+
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'bootstrap'
+    = javascript_include_tag 'application'
+    = javascript_include_tag 'bootstrap'
+    = csrf_meta_tags
+
+%body
+  %div.navbar
+    %div.navbar-inner
+      %div.container
+        %a.brand{:href => "#"} Bookcuddle
+        %div.nav-collapse
+          %ul.nav
+            %li
+              %a{:href => "/show"} Profile
+            %li
+              %a{:href => "/friends"} Friends
+        %div.pull-right
+          - if current_user
+            'Logged in!'
+            = link_to "Log out", logout_path
+          - else
+            = link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post
+
+  %div.container
+    = yield
+
+
+
+
