@@ -7,33 +7,33 @@
     = stylesheet_link_tag 'application'
     = stylesheet_link_tag 'bootstrap'
     = javascript_include_tag 'application'
+    = javascript_include_tag 'jquery'
     = javascript_include_tag 'bootstrap'
     = csrf_meta_tags
 
 %body
   %div.navbar
     %div.navbar-inner
-      %div.container
-        %a.brand{:href => "#"} Bookcuddle
-        %div.nav-collapse
-          %ul.nav
-            %li
-              = link_to 'Profile', current_user
-            %li
-              = link_to 'Friends', friends_path
-            %li.dropdown
-              %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown', :target => '#'}}
-                lol
-                %b.caret
-              %ul.dropdown-menu
-                %li lol
+      %a.brand{:href => "#"} Bookcuddle
+      %div.nav-collapse
+        %ul.nav
+          %li
+            = link_to 'Profile', current_user
+          %li
+            = link_to 'Friends', friends_path
+          %li.dropdown
+            %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown', :target => '#'}}
+              lol
+              %b.caret
+            %ul.dropdown-menu
+              %li lol
 
-        %div.pull-right
-          - if current_user
-            Logged in!
-            = link_to "Log out", logout_path
-          - else
-            = link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post
+      %div.pull-right
+        - if current_user
+          Logged in!
+          = link_to "Log out", logout_path
+        - else
+          = link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post
 
   %div.container
     = yield
