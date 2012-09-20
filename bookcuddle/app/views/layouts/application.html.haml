@@ -18,12 +18,19 @@
         %div.nav-collapse
           %ul.nav
             %li
-              %a{:href => "/show"} Profile
+              = link_to 'Profile', current_user
             %li
-              %a{:href => "/friends"} Friends
+              = link_to 'Friends', friends_path
+            %li.dropdown
+              %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown'}}
+                lol
+                %b.caret
+              %ul.dropdown-menu
+                %a lol
+
         %div.pull-right
           - if current_user
-            'Logged in!'
+            Logged in!
             = link_to "Log out", logout_path
           - else
             = link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post
