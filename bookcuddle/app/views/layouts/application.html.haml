@@ -38,6 +38,12 @@
   %div.container
     = yield
 
+:javascript
+  $(document).ready( function() {
+    console.log('hi');
+    $('.dropdown-toggle').dropdown();
+  });
+
 
 
 
