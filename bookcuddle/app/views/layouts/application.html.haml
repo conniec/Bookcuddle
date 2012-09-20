@@ -22,11 +22,11 @@
             %li
               = link_to 'Friends', friends_path
             %li.dropdown
-              %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown'}}
+              %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown', :target => '#'}}
                 lol
                 %b.caret
               %ul.dropdown-menu
-                %a lol
+                %li lol
 
         %div.pull-right
           - if current_user
