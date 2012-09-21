@@ -51,7 +51,7 @@ module API
     
     def get_unread_books(goodreads_id)
       res = compare_users(goodreads_id)
-      doc = Nokogiri::XML(res)
+      doc = Nokogiri::XML(res[:data])
       
       books = doc.xpath("//reviews//review")
 
