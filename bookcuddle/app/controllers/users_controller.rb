@@ -67,6 +67,7 @@ class UsersController < ApplicationController
   
   def compare
     @user = current_user
+    @friend_goodreads_id = params[:friend_goodreads_id]
     @comparison = @gr_connection.get_unread_books(params[:friend_goodreads_id])
   end
   

@@ -1,8 +1,8 @@
 class Discussion
   include Mongoid::Document
 
-  field :user_1, type: Integer
-  field :user_2, type: Integer
+  field :user_1, type: String
+  field :user_2, type: String
   field :book_id, type: Integer
   field :book_name, type: String
 
