@@ -81,9 +81,12 @@ module API
 
     private
       def set_consumer
-        OAuth::Consumer.new('oLeXuyhixiL1lMwTsw3fw', 
-                            'Jmw8ybptcmxrxv6p0IyKeTMKSHCPZZ1DYv53bRomU', 
+        OAuth::Consumer.new(APP_CONFIG['goodreads_key'],
+                            APP_CONFIG['goodreads_secret'],
                             :site => 'http://www.goodreads.com')
+        #OAuth::Consumer.new('oLeXuyhixiL1lMwTsw3fw', 
+                            #'Jmw8ybptcmxrxv6p0IyKeTMKSHCPZZ1DYv53bRomU', 
+                            #:site => 'http://www.goodreads.com')
       end
     
       def set_access_token(access_token, access_token_secret)
@@ -104,7 +107,7 @@ module API
       def user_info(goodreads_id)
         token = set_access_token(@access_token, @access_token_secret)
         response = token.get("http://www.goodreads.com/user/show/#{ goodreads_id }.xml", { 
-                     'key' => 'oLeXuyhixiL1lMwTsw3fw', 
+                     'key' => APP_CONFIG['goodreads_key'], 
                    })
 
         data = ''
@@ -131,6 +134,19 @@ module API
         token = set_access_token(@access_token, @access_token_secret)
         response = token.get("http://www.goodreads.com/user/compare/#{ goodreads_id }.xml")
 
+        data = ''
+        if response.code == '200'
+          data = response.body
+        end
+        {:code => response.code, :data => response.body}
+      end
+
+      def user_book_review(user_id, book_id)
+        token = set_access_token(@access_token, @access_token_secret)
+        response = token.get("http://www.goodreads.com/review/show_by_user_and_book.xml", 
+                      'user_id' => user_id,
+                      'book_id' => book_id,
+                      'key' => APP_CONFIG['goodreads_key'])
         data = ''
         if response.code == '200'
           data = response.body
