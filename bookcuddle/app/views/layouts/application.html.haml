@@ -9,7 +9,21 @@
     = javascript_include_tag 'application'
     = javascript_include_tag 'jquery'
     = javascript_include_tag 'bootstrap'
+    = javascript_include_tag 'jquery.blockUI'
     = csrf_meta_tags
+
+    :javascript
+      $(document).ajaxStop($.unblockUI);
+      function test() {
+        $.ajax({ url: 'blah.php', cache: false});
+      }
+
+      $(document).ready( function() {
+        $('.dropdown-toggle').dropdown();
+        console.log('hiiii');
+        $.blockUI();
+        test();
+      });
 
 %body
   %div.navbar
@@ -38,11 +52,6 @@
   %div.container
     = yield
 
-:javascript
-  $(document).ready( function() {
-    console.log('hi');
-    $('.dropdown-toggle').dropdown();
-  });
 
 
 
