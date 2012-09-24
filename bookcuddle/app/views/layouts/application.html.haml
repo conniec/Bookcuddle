@@ -14,16 +14,17 @@
 
     :javascript
       $(document).ajaxStop($.unblockUI);
-      function test() {
-        $.ajax({ url: 'blah.php', cache: false});
+      function doAjax() {
+        $.ajax('blah.php');
       }
 
       $(document).ready( function() {
         $('.dropdown-toggle').dropdown();
         console.log('hiiii');
         $.blockUI();
-        test();
+        doAjax();
       });
+    = yield :head
 
 %body
   %div.navbar

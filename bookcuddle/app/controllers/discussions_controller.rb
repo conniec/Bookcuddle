@@ -13,7 +13,7 @@ class DiscussionsController < ApplicationController
     begin
       user_1 = current_user
       #user_1 = User.find_by(goodreads_id: params[:user_1])
-      user_2 = User.find_by(goodreads_id: 1234)
+      user_2 = User.find_by(goodreads_id: params[:user_1].to_i)
     rescue
       flash[:error] = 'User does not exist, please invite them!'
       redirect_to friends_path
