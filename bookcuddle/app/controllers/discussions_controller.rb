@@ -1,26 +1,36 @@
 require 'goodreads_api'
 
 class DiscussionsController < ApplicationController
+  include API
+
+  before_filter :create_connection, :only => [:show]
   
   def new
     @discussion = Discussion.new
   end
 
+  def show
+    @discussion = Discussion.find(params[:id])
+    @user_1 = @discussion.users[0]
+    @user_2 = @discussion.users[1]
+    @book_id = @discussion.book_id
+    @book_name = @discussion.book_name
+
+    @status_1 = @gr_connection.get_user_book_status(@user_1.goodreads_id, @book_id)
+    @status_2 = @gr_connection.get_user_book_status(@user_2.goodreads_id, @book_id)
+    puts @status_1
+    puts @status_2
+  end
+
   def create
-    puts 'params'
-    puts params
 
     begin
       user_1 = current_user
-      #user_1 = User.find_by(goodreads_id: params[:user_1])
-      user_2 = User.find_by(goodreads_id: params[:user_1].to_i)
+      user_2 = User.find_by(goodreads_id: params[:user_2].to_i)
     rescue
       flash[:error] = 'User does not exist, please invite them!'
       redirect_to friends_path
     end
-    puts 'users!'
-    puts user_1.inspect
-    puts user_2.inspect
 
     begin
       @discussion = Discussion.find_by(user_1: user_1.id, user_2: user_2.id, book_id: params[:book_id])
@@ -34,8 +44,6 @@ class DiscussionsController < ApplicationController
       @discussion.user_1 = user_1.id
       @discussion.user_2 = user_2.id
 
-      puts @discussion.inspect
-
       # begin
       #   book = Book.find_by(goodreads_id: params[:book_id])
       # rescue
@@ -47,8 +55,9 @@ class DiscussionsController < ApplicationController
       # @discussion.book_name = book.name
       # @discussion.book = book
       @discussion.save
-    end
 
+    end
+    redirect_to show_discussion_path(@discussion.id)
   end
 
   # def edit
@@ -67,4 +76,8 @@ class DiscussionsController < ApplicationController
     end
   end
 
+  private
+    def create_connection
+      @gr_connection = API::Goodreads.new(session[:access_token], session[:access_token_secret])
+    end
 end
