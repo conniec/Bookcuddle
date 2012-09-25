@@ -35,6 +35,15 @@
         });
     };
 
+    $(document).ajaxStop($.unblockUI);
+
+    $(document).ready( function() {
+      $('.dropdown-toggle').dropdown();
+      console.log('hiiii');
+      $.blockUI({message: $('#domMessage')});
+      doAjax();
+    });
+
 %h1
   = "#{ @user.name }'s Friends"
 
@@ -51,3 +60,8 @@
         = link_to "Goodreads Profile", "http://goodreads.com/user/show/#{ friend[:goodreads_id] }"
       %td.compare
         = link_to "Invite", "/compare/#{ friend[:goodreads_id] }"
+
+%div#domMessage{:style => 'display:none;'}
+  %h1 Please wait...
+  %div.progress.progress-striped{:style => 'width:60%;align:middle;'}
+    %div.bar{:style => "width: 60%;"}
