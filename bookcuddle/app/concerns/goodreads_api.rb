@@ -27,6 +27,25 @@ module API
 
       {:goodreads_id => goodreads_id, :goodreads_name => goodreads_name}
     end
+
+    def get_user_book_status(user_id, book_id)
+      res = user_book_review(user_id, book_id)
+
+      return [] if res[:data] =~ /review not found/
+
+      doc = Nokogiri::XML(res[:data])
+      puts doc
+      statuses = doc.xpath("//review//user_statuses//user_status")
+
+      book_statuses = []
+      puts statuses.length
+      statuses.each do |status|
+        book_statuses << { :percent => status.css('percent').text,
+                            :created_at => status.css('created_at').text,
+                            :updated_at => status.css('updated_at').text}
+      end
+      book_statuses
+    end
     
     def get_user_friends(user_id)
       res = user_friends(user_id)
@@ -142,11 +161,11 @@ module API
       end
 
       def user_book_review(user_id, book_id)
-        token = set_access_token(@access_token, @access_token_secret)
-        response = token.get("http://www.goodreads.com/review/show_by_user_and_book.xml", 
-                      'user_id' => user_id,
-                      'book_id' => book_id,
-                      'key' => APP_CONFIG['goodreads_key'])
+        #No OAuth needed for this endpoint
+        goodreads_key = APP_CONFIG['goodreads_key']
+        url = "http://www.goodreads.com/review/show_by_user_and_book.xml?user_id=#{user_id}&book_id=#{book_id}&key=#{goodreads_key}"
+
+        response = HTTParty.get(url)
         data = ''
         if response.code == '200'
           data = response.body
