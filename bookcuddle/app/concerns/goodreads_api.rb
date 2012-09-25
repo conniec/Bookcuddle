@@ -54,7 +54,6 @@ module API
       friends_info = []
       return friends_info if res[:code] != '200'
 
-      puts 'get here?'
       doc = Nokogiri::XML(res[:data])
       friends = doc.xpath("//friends//user")
       
@@ -75,17 +74,20 @@ module API
       books = doc.xpath("//reviews//review")
 
       unread_books = []
-      
+
       books.each do |book|
+        puts 'review'
         puts book.css('your_review rating').text
-        if book.css('your_review rating').text == 'to-read' && book.css('their_review rating').text == 'to-read'
+        if ((book.css('your_review rating').text == 'to-read' && book.css('their_review rating').text == 'to-read') ||
+            (book.css('your_review rating').text == 'currently-reading' && book.css('their_review rating').text == 'currently-reading') )
           unread_books << { :title => book.css('book title').text,
                             :id => book.css('book id').text,
-                            :url => book.css('book url').text
+                            :url => book.css('book url').text,
+                            :your_review => book.css('your_review rating').text,
+                            :their_review => book.css('their_review rating').text
                           }
         end
       end
-      
       unread_books
     end
 
