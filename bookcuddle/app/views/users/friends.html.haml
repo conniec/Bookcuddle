@@ -38,8 +38,6 @@
     $(document).ajaxStop($.unblockUI);
 
     $(document).ready( function() {
-      $('.dropdown-toggle').dropdown();
-      console.log('hiiii');
       $.blockUI({message: $('#domMessage')});
       doAjax();
     });
