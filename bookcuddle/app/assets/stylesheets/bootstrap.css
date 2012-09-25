@@ -5033,3 +5033,7 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
+
+#loginButton {
+	margin-top: 8px;
+}
