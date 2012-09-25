@@ -1,10 +1,18 @@
 %h1 Unread Books
 
 %table.table.table-striped
+  %tr
+    %td Title
+    %td Your status
+    %td Friend status
+    %td ''
   - @comparison.each do |book|
     %tr
       %td
         = link_to book[:title], book[:url]
       %td
+        = book[:your_review]
       %td
-        = link_to "Start Discussion", "#"
+        = book[:their_review]
+      %td
+        = link_to "Start Discussion", create_discussion_path({:book_id => book[:id], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id})

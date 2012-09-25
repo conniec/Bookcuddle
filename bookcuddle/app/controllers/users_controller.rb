@@ -64,9 +64,26 @@ class UsersController < ApplicationController
       redirect_to signup_path
     end
   end
-  
+
+  def is_user?
+    goodreads_id = params[:goodreads_id]
+    begin
+      @user = User.find_by(goodreads_id: goodreads_id.to_i)
+      @user = {:goodreads_id => goodreads_id}
+    rescue
+      puts 'failed to find'
+      @user = {:goodreads_id => nil}
+    end
+    respond_to do |format|
+      format.json {
+        render :json => @user.to_json
+      }
+    end
+  end
+
   def compare
     @user = current_user
+    @friend_goodreads_id = params[:friend_goodreads_id]
     @comparison = @gr_connection.get_unread_books(params[:friend_goodreads_id])
   end
   

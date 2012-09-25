@@ -9,7 +9,10 @@
     = javascript_include_tag 'application'
     = javascript_include_tag 'jquery'
     = javascript_include_tag 'bootstrap'
+    = javascript_include_tag 'jquery.blockUI'
     = csrf_meta_tags
+    
+    = yield :head
 
 %body
   %div.navbar
@@ -17,16 +20,18 @@
       %a.brand{:href => "#"} Bookcuddle
       %div.nav-collapse
         %ul.nav
-          %li
-            = link_to 'Profile', current_user
-          %li
-            = link_to 'Friends', friends_path
           %li.dropdown
             %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown', :target => '#'}}
-              lol
+              Profile
               %b.caret
             %ul.dropdown-menu
-              %li lol
+              %li
+                = link_to 'Edit Profile', edit_user_path(current_user)
+                = link_to 'Goodreads Profile', '#'
+          %li
+            = link_to 'Friends', friends_path
+          %li
+            = link_to 'Discussions', discussions_path
 
       %div.pull-right
         - if current_user
@@ -38,11 +43,9 @@
   %div.container
     = yield
 
-:javascript
-  $(document).ready( function() {
-    console.log('hi');
-    $('.dropdown-toggle').dropdown();
-  });
+  %div#domMessage{:style => 'display:none;'}
+    %h1 We are default!
+
 
 
 

@@ -1,3 +1,49 @@
+= content_for :head do
+  :javascript
+    function doAjax() {
+      console.log('overrode');
+
+      $('tr').each(
+        function() {
+          var that = $(this);
+          var user_id = that.data('userid');
+          var url = '/isuser/' + user_id;
+          $.ajax({ url: url, 
+                  type: 'GET',
+                  dataType: 'json',
+                  cache: false,
+                  success: function(data) {
+                    // If user data is returned
+                    if (data['goodreads_id'] != null) {
+                      // select all the Invites and change to Compare
+
+                      //get the td
+                      var td = that[0];
+                      //get the Invite tr
+                      var tr = $(td).find('td[class=compare]')[0];
+                      //get the Invite a
+                      var tr_a = $(tr).find('a');
+                      //change the link HTML to 'Compare'
+                      tr_a.html('Compare');
+                      //change the link
+                      var compare_link = '/compare/' + data['goodreads_id'];
+                      tr_a.attr('href', compare_link);
+                    }
+                  }
+                }
+          );
+        });
+    };
+
+    $(document).ajaxStop($.unblockUI);
+
+    $(document).ready( function() {
+      $('.dropdown-toggle').dropdown();
+      console.log('hiiii');
+      $.blockUI({message: $('#domMessage')});
+      doAjax();
+    });
+
 %h1
   = "#{ @user.name }'s Friends"
 
@@ -5,12 +51,17 @@
 
 %table.table.table-striped
   - @friends.each do |friend|
-    %tr  
+    %tr{:data => {:userid => friend[:goodreads_id]}}  
       %td
         = image_tag(friend[:photo_url])
       %td
         = link_to friend[:name], "#"
       %td
         = link_to "Goodreads Profile", "http://goodreads.com/user/show/#{ friend[:goodreads_id] }"
-      %td 
-        = link_to "Compare", "/compare/#{ friend[:goodreads_id] }"
+      %td.compare
+        = link_to "Invite", "/compare/#{ friend[:goodreads_id] }"
+
+%div#domMessage{:style => 'display:none;'}
+  %h1 Please wait...
+  %div.progress.progress-striped{:style => 'width:60%;align:middle;'}
+    %div.bar{:style => "width: 60%;"}
