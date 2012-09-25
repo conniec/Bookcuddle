@@ -11,8 +11,14 @@
     = javascript_include_tag 'bootstrap'
     = javascript_include_tag 'jquery.blockUI'
     = csrf_meta_tags
-    
+    :javascript
+      $(document).ready( function() {
+        $('.dropdown-toggle').dropdown();
+      });
+
     = yield :head
+
+
 
 %body
   %div.navbar
