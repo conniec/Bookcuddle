@@ -1,0 +1,9 @@
+to-do:
+
+- change CSS for link onhovers
+- change color of visited links, active links
+- change logout link into button
+- change some action links into buttons (view discussion, compare, etc)
+- top nav into About, Contact, Help links, side nav for logged in user
+- create book info endpoint in goodreads_api
+- embed book model into discussions?
