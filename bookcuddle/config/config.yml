@@ -1,0 +1,11 @@
+development:
+  goodreads_key: oLeXuyhixiL1lMwTsw3fw
+  goodreads_secret: Jmw8ybptcmxrxv6p0IyKeTMKSHCPZZ1DYv53bRomU
+
+test:
+  goodreads_key: oLeXuyhixiL1lMwTsw3fw
+  goodreads_secret: Jmw8ybptcmxrxv6p0IyKeTMKSHCPZZ1DYv53bRomU
+
+production:
+  goodreads_key: oLeXuyhixiL1lMwTsw3fw
+  goodreads_secret: Jmw8ybptcmxrxv6p0IyKeTMKSHCPZZ1DYv53bRomU
