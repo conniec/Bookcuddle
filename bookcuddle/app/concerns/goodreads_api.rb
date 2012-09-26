@@ -76,8 +76,6 @@ module API
       unread_books = []
 
       books.each do |book|
-        puts 'review'
-        puts book.css('your_review rating').text
         if ((book.css('your_review rating').text == 'to-read' && book.css('their_review rating').text == 'to-read') ||
             (book.css('your_review rating').text == 'currently-reading' && book.css('their_review rating').text == 'currently-reading') )
           unread_books << { :title => book.css('book title').text,
@@ -89,6 +87,21 @@ module API
         end
       end
       unread_books
+    end
+
+    def get_book_info(goodreads_id)
+      res = book_show(goodreads_id)
+      doc = Nokogiri::XML(res[:data])
+      book_xml = doc.xpath("//book")
+      book_info = {}
+
+      book_info[:description] = book_xml.css('description').text
+      book_info[:num_pages] = book_xml.css('num_pages').text
+      book_info[:average_rating] = book_xml.css('average_rating').text
+      book_info[:publication_year] = book_xml.css('publication_year').text
+      book_info[:image_url] = book_xml.css('image_url').text
+
+      book_info
     end
 
     # def get_user_status_updates(access_token, access_token_secret, goodreads_id)
@@ -173,6 +186,20 @@ module API
           data = response.body
         end
         {:code => response.code, :data => response.body}
+      end
+
+      def book_show(book_id)
+        #No Oauth needed for this endpoint
+        goodreads_key = APP_CONFIG['goodreads_key']
+        url = "http://www.goodreads.com/book/show/#{book_id}?format=xml&key=#{goodreads_key}"
+
+        response = HTTParty.get(url)
+        data = ''
+        if response.code == '200'
+          data = response.body
+        end
+        {:code => response.code, :data => response.body}
+
       end
 
   end

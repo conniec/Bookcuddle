@@ -5,6 +5,6 @@ class Book
   field :image_url, type: String
   field :pub_year, type: String
   field :description, type: String
-  field :rating, type: String
+  field :average_rating, type: String
   field :num_pages, type: String
 end
