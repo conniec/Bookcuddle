@@ -1,11 +1,17 @@
 %h1 Unread Books
 
 %table.table.table-striped
-  %tr
-    %td Title
-    %td Your status
-    %td Friend status
-    %td ''
+  %thead
+    %tr
+      %td 
+        %b Title
+      %td 
+        %b Your status
+      %td 
+        %b Friend status
+      %td
+        %b Discussion
+  %tbody
   - @comparison.each do |book|
     %tr
       %td
