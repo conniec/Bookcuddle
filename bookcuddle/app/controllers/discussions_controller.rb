@@ -5,6 +5,14 @@ class DiscussionsController < ApplicationController
 
   before_filter :create_connection, :only => [:show]
   
+  def index
+    id = current_user.id
+    puts 'id'
+    puts id
+    @user = User.find_by(id: id)
+    @discussions = @user.discussions
+  end
+
   def new
     @discussion = Discussion.new
   end
@@ -23,6 +31,7 @@ class DiscussionsController < ApplicationController
         @discussion = { :discussion_id => nil }
       end
     else
+      puts 'show discussion'
       @discussion = Discussion.find(params[:id])
       @user_1 = @discussion.users[0]
       @user_2 = @discussion.users[1]

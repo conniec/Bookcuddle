@@ -1,0 +1,8 @@
+%h1 
+  = "#{ @user.name }'s Discussions"
+
+%div
+  - @discussions.each do |d|
+    = d.book_id
+    = d.user_1
+    = d.user_2

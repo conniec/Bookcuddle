@@ -2,7 +2,7 @@ Bookcuddle::Application.routes.draw do
 
   root :to => 'users#index'
   
-  resources :discussions, :only => [:create, :destroy, :new, :show]
+  resources :discussions, :only => [:create, :destroy, :new, :show, :index]
   resources :users
   resources :sessions, :only => [:create, :destroy]
   
