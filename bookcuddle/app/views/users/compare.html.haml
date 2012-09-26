@@ -15,21 +15,21 @@
                   dataType: 'json',
                   cache: false,
                   success: function(data) {
-                    // If user data is returned
+                    // If discussion data is returned
                     if (data['discussion_id'] != null) {
-                      // select all the Invites and change to Compare
+                      // select all the Create Discussions and change to View
 
                       //get the td
                       var td = that[0];
-                      //get the Invite tr
+                      //get the Discussions tr
                       var tr = $(td).find('td[class=discussion]')[0];
-                      //get the Invite a
-                      var tr_a = $(tr).find('a');
-                      //change the link HTML to 'Compare'
-                      tr_a.html('View Discussion');
                       //change the link
-                      var compare_link = '/compare/' + data['discussion_id'];
-                      tr_a.attr('href', compare_link);
+                      var show_link = '/discussions/' + data['discussion_id'];
+                      var show_a = $('<a>', {
+                        text: 'View Discussion',
+                        href: show_link
+                      })
+                      $(tr).html(show_a);
                     }
                   }
                 }
