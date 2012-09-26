@@ -11,7 +11,24 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    if request.xhr?
+      goodreads_id = params[:id]
+      begin
+        @user = User.find_by(goodreads_id: goodreads_id.to_i)
+        @user = {:goodreads_id => goodreads_id}
+      rescue
+        puts 'failed to find'
+        @user = {:goodreads_id => nil}
+      end
+    else
+      @user = User.find(params[:id])
+    end
+    respond_to do |format|
+      format.html
+      format.json {
+        render :json => @user.to_json
+      }
+    end
   end
   
   def new
@@ -62,22 +79,6 @@ class UsersController < ApplicationController
       flash[:error] = 'Failed to fetch friends'
       puts 'Failed to fetch friends'
       redirect_to signup_path
-    end
-  end
-
-  def is_user?
-    goodreads_id = params[:goodreads_id]
-    begin
-      @user = User.find_by(goodreads_id: goodreads_id.to_i)
-      @user = {:goodreads_id => goodreads_id}
-    rescue
-      puts 'failed to find'
-      @user = {:goodreads_id => nil}
-    end
-    respond_to do |format|
-      format.json {
-        render :json => @user.to_json
-      }
     end
   end
 
