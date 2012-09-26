@@ -1,9 +1,6 @@
-%h1 Discussions#show :)
-%p Find me in app/views/discussions/new.html.haml
+%h1= 'Discussion: '+ @discussion.book_name
 
 %div.whee
-    Book name: 
-    = @discussion.book_name
     %br
     User 1:
     = @user_1.name

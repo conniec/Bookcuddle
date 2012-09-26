@@ -1,13 +1,27 @@
 %h1 
-  = "#{ @user.name }'s Discussions"
+  = "My Discussions"
 
 %div.discussions-list
   %table.table.table-striped
-    - @discussions.each do |discussion|
-      %tr{:data => {:discussion_id => discussion[:id]}}
+    %thead
+      %tr
+        %td 
+          %b Book Title
         %td
-          = discussion.book_name
-        %td
-          = discussion.user_2_name
-        %td.view
-          = link_to "View Discussion", show_discussion_path(discussion)
+          %b Book Author
+        %td 
+          %b Your Friend
+        %td 
+          %b Link
+
+    %tbody
+      - @discussions.each do |discussion|
+        %tr{:data => {:discussion_id => discussion[:id]}}
+          %td
+            = discussion.book_name
+          %td
+            = discussion.book_id
+          %td
+            = discussion.user_2_name
+          %td.view
+            = link_to "View Discussion", show_discussion_path(discussion)
