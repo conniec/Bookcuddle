@@ -46,8 +46,6 @@
 %h1
   = "#{ @user.name }'s Friends"
 
-%p Check the server logs for the XML
-
 %table.table.table-striped
   - @friends.each do |friend|
     %tr{:data => {:userid => friend[:goodreads_id]}}

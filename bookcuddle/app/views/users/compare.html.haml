@@ -67,7 +67,7 @@
       %td
         = book[:their_review]
       %td.discussion
-        = link_to "Start Discussion", discussions_path({:book_id => book[:id], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id}), :method => :post
+        = link_to "Start Discussion", discussions_path({:book_id => book[:id], :book_name => book[:title], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id}), :method => :post
 
 %div#domMessage{:style => 'display:none;'}
   %h1 Please wait...

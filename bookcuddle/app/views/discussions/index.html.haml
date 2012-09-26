@@ -1,8 +1,13 @@
 %h1 
   = "#{ @user.name }'s Discussions"
 
-%div
-  - @discussions.each do |d|
-    = d.book_id
-    = d.user_1
-    = d.user_2
+%div.discussions-list
+  %table.table.table-striped
+    - @discussions.each do |discussion|
+      %tr{:data => {:discussion_id => discussion[:id]}}
+        %td
+          = discussion.book_name
+        %td
+          = discussion.user_2_name
+        %td.view
+          = link_to "View Discussion", show_discussion_path(discussion)

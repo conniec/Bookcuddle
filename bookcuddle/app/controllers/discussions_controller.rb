@@ -65,7 +65,10 @@ class DiscussionsController < ApplicationController
     @discussion.users.push(user_2)
     @discussion.user_1 = user_1.id
     @discussion.user_2 = user_2.id
+    @discussion.user_1_name = user_1.name
+    @discussion.user_2_name = user_2.name
     @discussion.book_id = params[:book_id]
+    @discussion.book_name = params[:book_name]
     
     if @discussion.save
       flash[:success] = "New discussion created!"
