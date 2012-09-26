@@ -7,3 +7,4 @@ to-do:
 - top nav into About, Contact, Help links, side nav for logged in user
 - create book info endpoint in goodreads_api
 - embed book model into discussions?
+- use bookcuddle@gmail.com to send emails through gmail (invite link)
