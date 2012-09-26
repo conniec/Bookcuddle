@@ -7,7 +7,7 @@
         function() {
           var that = $(this);
           var user_id = that.data('userid');
-          var url = '/isuser/' + user_id;
+          var url = '/users/' + user_id;
           $.ajax({ url: url, 
                   type: 'GET',
                   dataType: 'json',
@@ -57,7 +57,7 @@
       %td
         = link_to "Goodreads Profile", "http://goodreads.com/user/show/#{ friend[:goodreads_id] }"
       %td.compare
-        = link_to "Invite", "/compare/#{ friend[:goodreads_id] }"
+        = link_to "Invite", "#"
 
 %div#domMessage{:style => 'display:none;'}
   %h1 Please wait...

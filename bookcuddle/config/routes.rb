@@ -14,5 +14,4 @@ Bookcuddle::Application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'authorized', to: 'sessions#authorized', as: 'authorized'
-  get 'isuser/:goodreads_id', to: 'users#is_user?', as: 'is_user'
 end
