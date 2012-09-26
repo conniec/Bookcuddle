@@ -8,6 +8,7 @@
           var that = $(this);
           var user_id = that.data('userid');
           var url = '/users/' + user_id;
+          console.log(url);
           $.ajax({ url: url, 
                   type: 'GET',
                   dataType: 'json',
@@ -49,7 +50,7 @@
 
 %table.table.table-striped
   - @friends.each do |friend|
-    %tr{:data => {:userid => friend[:goodreads_id]}}  
+    %tr{:data => {:userid => friend[:goodreads_id]}}
       %td
         = image_tag(friend[:photo_url])
       %td
