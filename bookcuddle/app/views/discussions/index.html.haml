@@ -1,5 +1,7 @@
 %h1 
-  = "My Discussions"
+  %i.icon-comments-alt{:style => 'padding-top: 12px; padding-right: 20px;'}
+  %span
+    My Discussions
 
 %div.discussions-list
   %table.table.table-striped
@@ -24,4 +26,5 @@
           %td
             = discussion.user_2_name
           %td.view
-            = link_to "View", discussion_path(discussion), :class => 'btn btn-primary'
+            = link_to 'View', discussion_path(discussion), :class => 'btn btn-primary'
+            / = link_to raw('<i class="icon-comments-alt"></i> View'), discussion_path(discussion), :class => 'btn btn-primary'
