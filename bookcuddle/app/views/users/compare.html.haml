@@ -18,18 +18,15 @@
                     // If discussion data is returned
                     if (data['discussion_id'] != null) {
                       // select all the Create Discussions and change to View
-
                       //get the td
                       var td = that[0];
                       //get the Discussions tr
                       var tr = $(td).find('td[class=discussion]')[0];
                       //change the link
-                      var show_link = '/discussions/' + data['discussion_id'];
-                      var show_a = $('<a>', {
-                        text: 'View Discussion',
-                        href: show_link
-                      })
-                      $(tr).html(show_a);
+                      var tr_a = $(tr).find('a');
+                      tr_a.html('View Discussion');
+                      var compare_link = '/discussions/' + data['discussion_id'];
+                      tr_a.attr('href', compare_link);
                     }
                   }
                 }
@@ -67,7 +64,7 @@
       %td
         = book[:their_review]
       %td.discussion
-        = link_to "Start Discussion", discussions_path({:book_id => book[:id], :book_name => book[:title], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id}), :method => :post
+        = link_to "Start Discussion", discussions_path({:book_id => book[:id], :book_name => book[:title], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id}), :method => :post, :class => "btn btn-primary btn-mini"
 
 %div#domMessage{:style => 'display:none;'}
   %h1 Please wait...

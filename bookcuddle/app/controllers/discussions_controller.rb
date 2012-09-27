@@ -20,23 +20,27 @@ class DiscussionsController < ApplicationController
   def show
     if request.xhr?
       begin
+        puts 'looking for book'
         current_user_id = current_user.id.to_s
         friend_id = User.find_by(:goodreads_id => params[:friend_id]).id
-        book_id = params[:id]
+        book_id = params[:id].to_i
+        users = [current_user_id, friend_id]
         discussion_id = Discussion.where(:book_id => book_id, 
-                                         :user_1.in => [current_user_id, friend_id],
-                                         :user_2.in => [current_user_id, friend_id]).first.id
+                                         :user_1.in => users,
+                                         :user_2.in => users).first.id
+        puts 'found book'
         @discussion = { :discussion_id => discussion_id }
       rescue
+        puts 'did not find'
         @discussion = { :discussion_id => nil }
       end
     else
       puts 'show discussion'
       @discussion = Discussion.find(params[:id])
+      puts '*' * 50
+      puts @discussion.inspect
       @user_1 = @discussion.users[0]
       @user_2 = @discussion.users[1]
-      @book_id = @discussion.book_id
-      @book_name = @discussion.book_name
 
       @status_1 = @gr_connection.get_user_book_status(@user_1.goodreads_id, @book_id)
       @status_2 = @gr_connection.get_user_book_status(@user_2.goodreads_id, @book_id)

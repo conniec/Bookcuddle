@@ -1,11 +1,12 @@
-%h1= 'Discussion: '+ @discussion.book_name
-
+%h1
+  = 'Discussion: Book ID - '+ @discussion.book_id.to_s
+  
 %div.whee
-    %br
-    User 1:
-    = @user_1.name
-    = @status_1
-    %br
-    User 2:
-    = @user_2.name
-    = @status_2
+  %br
+  User 1:
+  = @user_1.name
+  = @status_1
+  %br
+  User 2:
+  = @user_2.name
+  = @status_2
