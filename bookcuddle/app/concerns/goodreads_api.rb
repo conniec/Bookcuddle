@@ -34,11 +34,9 @@ module API
       return [] if res[:data] =~ /review not found/
 
       doc = Nokogiri::XML(res[:data])
-      puts doc
       statuses = doc.xpath("//review//user_statuses//user_status")
 
       book_statuses = []
-      puts statuses.length
       statuses.each do |status|
         book_statuses << { :percent => status.css('percent').text,
                             :created_at => status.css('created_at').text,
@@ -50,7 +48,6 @@ module API
     def get_user_friends(user_id)
       res = user_friends(user_id)
 
-      puts res[:code] == '200'
       friends_info = []
       return friends_info if res[:code] != '200'
 
@@ -101,6 +98,16 @@ module API
       book_info[:publication_year] = book_xml.css('publication_year').text
       book_info[:image_url] = book_xml.css('image_url').text
 
+      book_authors = []
+      doc_authors = doc.xpath("//book//authors//author")
+      doc_authors.each do |author|
+        book_authors << { :name => author.css('name').text,
+                          :id => author.css('id').text,
+                          :image_url => author.css('image_url').text 
+                        }
+      end
+      book_info[:authors] = book_authors
+      
       book_info
     end
 
@@ -155,8 +162,6 @@ module API
         token = set_access_token(@access_token, @access_token_secret)
         response = token.get("http://www.goodreads.com/friend/user/#{ user_id }?format=xml")
 
-        puts 'code is: '
-        puts response.code
         data = ''
         if response.code == '200'
           data = response.body
