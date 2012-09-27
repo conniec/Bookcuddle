@@ -76,7 +76,7 @@ class DiscussionsController < ApplicationController
     
     if @discussion.save
       flash[:success] = "New discussion created!"
-      redirect_to show_discussion_path(@discussion)
+      redirect_to discussion_path(@discussion)
     else
       flash.now[:notice] = "Try again."
       redirect_to friends_path

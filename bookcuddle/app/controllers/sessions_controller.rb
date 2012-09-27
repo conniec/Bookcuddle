@@ -49,10 +49,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  def login_user(user_id)
-    session[:user_id] = user_id
-  end
-
   private
     def login_user(user_id)
       session[:user_id] = user_id
