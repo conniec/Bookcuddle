@@ -23,7 +23,7 @@ class DiscussionsController < ApplicationController
         puts 'looking for book'
         current_user_id = current_user.id.to_s
         friend_id = User.find_by(:goodreads_id => params[:friend_id]).id
-        book_id = params[:id].to_i
+        book_id = params[:id]
         users = [current_user_id, friend_id]
         discussion_id = Discussion.where(:book_id => book_id, 
                                          :user_1.in => users,
@@ -41,6 +41,7 @@ class DiscussionsController < ApplicationController
       puts @discussion.inspect
       @user_1 = @discussion.users[0]
       @user_2 = @discussion.users[1]
+      @book_id = @discussion.book_id
 
       @status_1 = @gr_connection.get_user_book_status(@user_1.goodreads_id, @book_id)
       @status_2 = @gr_connection.get_user_book_status(@user_2.goodreads_id, @book_id)
