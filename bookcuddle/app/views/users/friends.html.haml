@@ -24,8 +24,10 @@
                       var tr = $(td).find('td[class=compare]')[0];
                       //get the Invite a
                       var tr_a = $(tr).find('a');
-                      //change the link HTML to 'Compare'
+                      //change the link HTML to 'Compare', change styling
                       tr_a.html('Compare');
+                      tr_a.attr('class', 'btn btn-primary');
+                      tr_a.css('color', 'white');
                       //change the link
                       var compare_link = '/compare/' + data['goodreads_id'];
                       tr_a.attr('href', compare_link);
@@ -56,7 +58,7 @@
       %td
         = link_to "Goodreads Profile", "http://goodreads.com/user/show/#{ friend[:goodreads_id] }"
       %td.compare
-        = link_to "Invite", "#"
+        %a.btn Invite
 
 %div#domMessage{:style => 'display:none;'}
   %h1 Please wait...
