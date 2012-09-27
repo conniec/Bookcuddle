@@ -11,3 +11,8 @@
  *= require_self
  *= require_tree .
  */
+
+.navbar-inner {
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+}
