@@ -44,7 +44,9 @@
       doAjax();
     });
 
-%h1= 'Compare Books with ' + @friend.name
+%h1
+  %i.icon-paper-clip{:style => 'padding-top: 12px; padding-right: 20px;'}
+  = 'Compare Books with ' + @friend.name
 
 %table.table.table-striped
   %thead

@@ -27,25 +27,27 @@
         %div.nav-collapse
           %ul.nav
             -if current_user
-              %li.dropdown
-                %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown', :target => '#'}}
-                  Profile
-                  %b.caret
-                %ul.dropdown-menu
-                  %li
-                    = link_to 'Edit Profile', edit_user_path(current_user)
-                    = link_to 'Goodreads Profile', '#'
+              %li
+                = link_to 'Books', '#'
               %li
                 = link_to 'Friends', friends_path
               %li
                 = link_to 'Discussions', discussions_path
 
         %div.pull-right
-          - if current_user
-            Logged in!
-            = link_to "Log out", logout_path
-          - else
-            #loginButton= link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post
+          %ul.nav
+            - if current_user
+              %li.dropdown
+                %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown', :target => '#'}}
+                  Profile
+                  %b.caret
+                %ul.dropdown-menu.pull-right
+                  %li
+                    = link_to 'Edit Profile', edit_user_path(current_user)
+                    = link_to 'Goodreads Profile', '#'
+                    = link_to raw('Log out <i class="icon-off" style="padding-top:2px;"></i>'), logout_path
+            - else
+              #loginButton= link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post
 
     %div.container
       = yield
