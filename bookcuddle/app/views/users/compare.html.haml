@@ -45,10 +45,10 @@
     });
 
 %h1
-  %i.icon-paper-clip{:style => 'padding-top: 12px; padding-right: 20px;'}
+  %i.icon-bookmark{:style => 'padding-top: 15px; padding-right: 15px;'}
   = 'Compare Books with ' + @friend.name
 
-%table.table.table-striped
+%table.table.table-striped.table-bordered
   %thead
     %tr
       %td 
@@ -69,9 +69,7 @@
       %td
         = book[:their_review]
       %td.discussion
-        = link_to "Start", discussions_path({:book_id => book[:id], :book_name => book[:title], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id}), :method => :post, :class => 'btn btn-primary'
+        = link_to "Start", discussions_path({:book_id => book[:id], :book_name => book[:title], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id}), :method => :post, :class => 'btn'
 
 %div#domMessage{:style => 'display:none;'}
-  %h1 Please wait...
-  %div.progress.progress-striped{:style => 'width:60%;align:middle;'}
-    %div.bar{:style => "width: 60%;"}
+  %h2 Please wait...
