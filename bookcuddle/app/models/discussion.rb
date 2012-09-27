@@ -11,6 +11,7 @@ class Discussion
   field :book_name, type: String
 
   has_and_belongs_to_many :users
+  belongs_to :book
 
   attr_accessible :user_1, :user_2, :book_id, :book_name, :user_1_name, :user_2_name
 end

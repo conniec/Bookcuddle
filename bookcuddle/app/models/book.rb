@@ -7,4 +7,6 @@ class Book
   field :description, type: String
   field :average_rating, type: String
   field :num_pages, type: String
+
+  has_many :discussion
 end
