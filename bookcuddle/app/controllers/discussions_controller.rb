@@ -41,6 +41,7 @@ class DiscussionsController < ApplicationController
       puts @discussion.inspect
       @user_1 = @discussion.users[0]
       @user_2 = @discussion.users[1]
+      @book_id = @discussion.book_id
 
       @status_1 = @gr_connection.get_user_book_status(@user_1.goodreads_id, @book_id)
       @status_2 = @gr_connection.get_user_book_status(@user_2.goodreads_id, @book_id)
