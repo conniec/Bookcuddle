@@ -12,7 +12,7 @@
         %td 
           %b Your Friend
         %td 
-          %b Link
+          %b Discussion
 
     %tbody
       - @discussions.each do |discussion|
@@ -24,4 +24,4 @@
           %td
             = discussion.user_2_name
           %td.view
-            = link_to "View Discussion", show_discussion_path(discussion)
+            = link_to "View Discussion", discussion_path(discussion)
