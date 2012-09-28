@@ -1,10 +1,17 @@
-to-do:
-
-- change CSS for link onhovers
-- change color of visited links, active links
-- change logout link into button
-- change some action links into buttons (view discussion, compare, etc)
-- top nav into About, Contact, Help links, side nav for logged in user
+DONE
+- change color of visited links, active links (done by Connie, all links same color)
+- change logout link into button (done by Connie)
+- change some action links into buttons (done by Connie)
 - create book info endpoint in goodreads_api (done by Connie)
 - embed book model into discussions? (done by Connie, used belongs_to and has_many)
+
+
+TO-DO
 - use bookcuddle@gmail.com to send emails through gmail (invite link)
+- Find a way to display book info (Ken to-do)
+- top nav into About, Contact, Help links, side nav for logged in user (or create footer)
+- change CSS for link onhovers (?)
+- better user flow, maybe page with friends that are on the site?
+- d3 or graph the progress on Discussion page
+- Add comments for discussion page
+- Maybe add quotes to a book?
