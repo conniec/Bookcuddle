@@ -7,7 +7,7 @@
         function() {
           var that = $(this);
           var user_id = that.data('userid');
-          var url = '/users/' + user_id;
+          var url = '/users/' + user_id + '/?add_friend=1';
           console.log(url);
           $.ajax({ url: url, 
                   type: 'GET',
