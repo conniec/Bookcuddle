@@ -160,7 +160,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #97310e;
+  /*color: #97310e;*/
   text-decoration: underline;
 }
 .img-rounded {
