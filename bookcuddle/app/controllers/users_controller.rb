@@ -15,9 +15,12 @@ class UsersController < ApplicationController
       goodreads_id = params[:id]
       begin
         @user = User.find_by(goodreads_id: goodreads_id.to_i)
+        if params[:add_friend] == '1'
+          puts 'adding friend!'
+          current_user.add_friend(@user)
+        end
         @user = {:goodreads_id => goodreads_id}
       rescue
-        puts 'failed to find'
         @user = {:goodreads_id => nil}
       end
     else
