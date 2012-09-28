@@ -7,6 +7,11 @@
         function() {
           var that = $(this);
           var book_id = that.data('book_id');
+          var book_url = '/books?id=' + book_id;
+          $.ajax({ url: book_url,
+                   dataType: 'json',
+                   type: 'POST'});
+
           var friend_id = that.data('friend_id');
           var url = '/discussions/' + book_id + '?friend_id=' + friend_id;
           console.log(url);

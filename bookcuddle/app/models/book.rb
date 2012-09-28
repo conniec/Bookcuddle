@@ -7,6 +7,8 @@ class Book
   field :description, type: String
   field :average_rating, type: String
   field :num_pages, type: String
+  field :authors, type: Array, :default => []
 
   has_many :discussion
+  attr_accessible :title, :image_url, :goodreads_id, :title
 end
