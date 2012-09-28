@@ -11,7 +11,9 @@ TO-DO
 - Find a way to display book info (Ken to-do)
 - top nav into About, Contact, Help links, side nav for logged in user (or create footer)
 - change CSS for link onhovers (?)
-- better user flow, maybe page with friends that are on the site?
+- better user flow, maybe page with friends that are on the site? (Connie started friends model)
 - d3 or graph the progress on Discussion page
 - Add comments for discussion page
-- Maybe add quotes to a book?
+- Maybe add quotes to a book? (Connie starting)
+- Add DelayedJob
+- Batch book creation into one ajax call, add creation to delaydjob queue
