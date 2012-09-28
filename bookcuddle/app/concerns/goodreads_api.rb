@@ -112,14 +112,23 @@ module API
       book_info
     end
 
-    # def get_user_status_updates(access_token, access_token_secret, goodreads_id)
-    #   user = user_info(access_token, access_token_secret, goodreads_id)
-    #   doc = Nokogiri::XML(user)
-    #   
-    #   status_updates = 
-    #   
-    #   connie.at_xpath("//updates//update[@type='userstatus']//action_text").content
-    # end
+    #params should be a dict containing the following:
+    #quote[author_name]: Name of the quote author (required)
+    #quote[author_id]: id of the author
+    #quote[book_id]: id of the book from which the quote was taken
+    #quote[body]: The quote! (required)
+    #quote[tags]: Comma-separated tags
+    def add_quote(params)
+      puts params
+      res = post_quote(params)
+      if res[:code] == '200'
+        puts 'quoted posted successfully'
+        true
+      else
+        puts 'error, try again later?'
+        false
+      end
+    end
 
     private
       def set_consumer
@@ -205,7 +214,21 @@ module API
           data = response.body
         end
         {:code => response.code, :data => response.body}
+      end
 
+      def post_quote(params)
+        token = set_access_token(@access_token, @access_token_secret)
+        response = token.post("http://www.goodreads.com/quotes.xml", {
+                                'quote[author_name]' => params[:author_name],
+                                'quote[author_id]' => params[:author_id],
+                                'quote[book_id]' => params[:book_id],
+                                'quote[body]' => params[:body]
+          })
+        data = ''
+        if response.code == '200'
+          data = response.body
+        end
+        {:code => response.code, :data => response.body}
       end
 
   end
