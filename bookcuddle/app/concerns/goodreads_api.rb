@@ -40,7 +40,8 @@ module API
       statuses.each do |status|
         book_statuses << { :percent => status.css('percent').text,
                             :created_at => status.css('created_at').text,
-                            :updated_at => status.css('updated_at').text}
+                            :updated_at => status.css('updated_at').text,
+                            :page => status.css('page').text }
       end
       book_statuses
     end

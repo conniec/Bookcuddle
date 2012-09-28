@@ -1,52 +1,64 @@
-%p
-  %h1
-    = 'Discussion: '+ @discussion.book_name
 
+%h1
+  %i.icon-book{:style => 'padding-top: 11px; padding-right: 15px;'}
+  %i.icon-comments{:style => 'padding-top: 15px; padding-right: 20px;'}
+  = @discussion.book_name
 
-%p
-%div.status
-  %table.table
-    %div.progress-bars
-      %tr
-        %td.span4
-          %h4= @user_1.name
-        %td.span4
-          %div.progress
-            %div.bar{:style => "width: #{@status_1[0][:percent]}%;"}
-        %td
-          = @status_1[0][:percent]
-      %tr
-        %td.span6
-          %h4= @user_2.name
-        %td.span6
-          %div.progress
-            %div.bar{:style => "width: #{@status_2[0][:percent]}%;"}
-        %td
-          = @status_2[0][:percent]
+%div.users{:style => 'margin-top: 30px;'}
+  %ul
+    %li
+      %h4
+        %i.icon-user
+        = @user_1.name
+    %li
+      %h4
+        %i.icon-user
+        = @user_2.name
 
-  %div.row
-    %div.span6
-      %h3= @user_1.name
-      %div.progress
-        %div.bar{:style => "width: #{@status_1[0][:percent]}%;"}
-      %ul
-      - @status_1.each do |s|
-        %li
-          Percent: 
-          = s[:created_at]
-        %li
-          Date: 
-          = s[:percent]
+- if @status_1.empty? and @status_2.empty?
+  No statuses to show! :(
+- else
+  %div.status
+    %table.table
+      %div.progress-bars
+        %tr
+          %td.span3
+            %h4= @user_1.name
+          %td.span6
+            %div.progress
+              = @status_1[0][:percent] + "%"
+              %div.bar{:style => "width: #{@status_1[0][:percent]}%;"}
+        %tr
+          %td.span3
+            %h4= @user_2.name
+          %td.span6
+            %div.progress
+              = @status_2[0][:percent] + "%"
+              %div.bar{:style => "width: #{@status_2[0][:percent]}%;"}
 
-    %div.span6
-      %h3= @user_2.name
-      %ul
-      %div.progress
-        %div.bar{:style => "width: #{@status_2[0][:percent]}%;"}
-      - @status_2.each do |s|
-        %li
-          Percent: 
-          = s[:created_at]
-        %li
-          Date: 
-          = s[:percent]
+    %div.row
+      %div.span6
+        %h3= @user_1.name
+        %div.progress
+          %div.bar{:style => "width: #{@status_1[0][:percent]}%;"}
+        %ul
+        - @status_1.each do |s|
+          %li
+            Percent: 
+            = s[:created_at]
+          %li
+            Date: 
+            = s[:percent]
+
+      %div.span6
+        %h3= @user_2.name
+        %ul
+        %div.progress
+          %div.bar{:style => "width: #{@status_2[0][:percent]}%;"}
+        - @status_2.each do |s|
+          %li
+            Percent: 
+            = s[:created_at]
+          %li
+            Date: 
+            = s[:percent]
