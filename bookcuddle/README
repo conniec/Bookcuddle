@@ -19,3 +19,4 @@ TO-DO
 - Add DelayedJob
 - Batch book creation into one ajax call, add creation to delaydjob queue
 - Try a test deploy to heroku
+- Add a check in discussions#create to make sure we're not duplicating discussions
