@@ -10,5 +10,34 @@ class Book
   field :authors, type: Array, :default => []
 
   has_many :discussion
-  attr_accessible :title, :image_url, :goodreads_id, :title
+  attr_accessible :title, :image_url, :goodreads_id, :pub_year, :description, :average_rating, :num_pages, :authors
+
+  #before_filter :create_connection, :only => [:find_or_create_by_goodreads]
+
+  def self.find_or_create_by_goodreads(access_token, access_token_secret, goodreads_id)
+    #Get the book info from Goodreads
+    puts 'creating a book!'
+    begin
+      book = Book.find_by(:goodreads_id => goodreads_id)
+      book
+    rescue
+      @gr_connection = API::Goodreads.new(access_token, access_token_secret)
+      book_info = @gr_connection.get_book_info(goodreads_id)
+      'here is my info!'
+      puts book_info
+
+      return false if book_info == {}
+      
+      #Create a book in model
+      @book = Book.new(book_info)
+      @book.goodreads_id = goodreads_id
+      @book.save
+    end
+  end
+
+  private
+    def create_connection
+      @gr_connection = API::Goodreads.new(session[:access_token], session[:access_token_secret])
+    end
+
 end
