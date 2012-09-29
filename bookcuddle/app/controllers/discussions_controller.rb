@@ -17,6 +17,16 @@ class DiscussionsController < ApplicationController
     @discussion = Discussion.new
   end
 
+  def quote
+    if request.xhr?
+      begin
+        #Start posting quote to Goodreads
+        puts 'posting quote!!'
+      rescue
+      end
+    end
+  end
+
   def show
     if request.xhr?
       begin
@@ -28,10 +38,10 @@ class DiscussionsController < ApplicationController
         discussion_id = Discussion.where(:book_id => book_id, 
                                          :user_1.in => users,
                                          :user_2.in => users).first.id
-        puts 'found book'
+        puts 'found discussion'
         @discussion = { :discussion_id => discussion_id }
       rescue
-        puts 'did not find'
+        puts 'did not discussion'
         @discussion = { :discussion_id => nil }
       end
     else

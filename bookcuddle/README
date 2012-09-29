@@ -15,5 +15,7 @@ TO-DO
 - d3 or graph the progress on Discussion page
 - Add comments for discussion page
 - Maybe add quotes to a book? (Connie starting)
+- Add status posting for discussion page
 - Add DelayedJob
 - Batch book creation into one ajax call, add creation to delaydjob queue
+- Try a test deploy to heroku
