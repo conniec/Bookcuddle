@@ -15,6 +15,14 @@
         %i.icon-user
         = @user_2.name
 
+%form{:id => "quote"}
+  %legend Add quote to Goodreads
+  %label Add a quote
+  %textarea{:placeholder => "type something!", :type => "text", :id => 'text', :value=>"whee"}
+  %input{:placeholder => "Type something…", :type => "text", :id => 'text2', :value=>'wheeee'}
+    %button.btn{:type => "submit", :id => 'quote_button'} Submit quote
+
+
 - if @status_1.empty? and @status_2.empty?
   No statuses to show! :(
 - else
