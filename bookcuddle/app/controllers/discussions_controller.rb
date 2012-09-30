@@ -51,7 +51,7 @@ class DiscussionsController < ApplicationController
       puts @discussion.inspect
       @user_1 = @discussion.users[0]
       @user_2 = @discussion.users[1]
-      @book_id = @discussion.book_id
+      @book_id = @discussion.book_goodreads_id
 
       @status_1 = @gr_connection.get_user_book_status(@user_1.goodreads_id, @book_id)
       @status_2 = @gr_connection.get_user_book_status(@user_2.goodreads_id, @book_id)
@@ -82,8 +82,11 @@ class DiscussionsController < ApplicationController
     @discussion.user_2 = user_2.id
     @discussion.user_1_name = user_1.name
     @discussion.user_2_name = user_2.name
-    @discussion.book_id = params[:book_id]
+    @discussion.book_goodreads_id = params[:book_id]
     @discussion.book_name = params[:book_name]
+
+    book = Book.find_or_create_by_goodreads(session[:access_token], session[:access_token_secret], params[:book_id])
+    @discussion.book = book
     
     if @discussion.save
       flash[:success] = "New discussion created!"

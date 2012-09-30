@@ -3,7 +3,7 @@ class Discussion
 
   field :user_1, type: String
   field :user_2, type: String
-  field :book_id, type: Integer
+  field :book_goodreads_id, type: Integer
 
   #Cached values
   field :user_1_name, type: String

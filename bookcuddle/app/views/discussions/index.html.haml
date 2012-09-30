@@ -22,9 +22,10 @@
           %td
             = discussion.book_name
           %td
-            = discussion.book_id
+            = discussion.book.authors[0]['name']
           %td
-            = discussion.user_2_name
+            %a{:href => "/compare/#{discussion.user_2}"}
+              = discussion.user_2_name
           %td.view
             = link_to 'View', discussion_path(discussion), :class => 'btn btn-primary'
             / = link_to raw('<i class="icon-comments-alt"></i> View'), discussion_path(discussion), :class => 'btn btn-primary'
