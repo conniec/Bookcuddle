@@ -1,19 +1,13 @@
 
 %h1
-  %i.icon-book{:style => 'padding-top: 11px; padding-right: 15px;'}
+  %i.icon-book{:style => 'padding-top: 15px; padding-right: 15px;'}
   %i.icon-comments{:style => 'padding-top: 15px; padding-right: 20px;'}
   = @discussion.book_name
-
-%div.users{:style => 'margin-top: 30px;'}
-  %ul
-    %li
-      %h4
-        %i.icon-user
-        = @user_1.name
-    %li
-      %h4
-        %i.icon-user
-        = @user_2.name
+  %small{:style => 'font-size: 0.5em;'}
+    %i.icon-user{:style => 'padding-top: 4px'}
+    = @user_1.name
+    %i.icon-user{:style => 'padding-top: 4px'}
+    = @user_2.name
 
 - if @status_1.empty? and @status_2.empty?
   No statuses to show! :(
