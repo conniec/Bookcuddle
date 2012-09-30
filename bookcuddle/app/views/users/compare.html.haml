@@ -71,6 +71,9 @@
     %tr{:data => {:book_id => book[:id], :friend_id => @friend_goodreads_id } }  
       %td
         = link_to book[:title], book[:url]
+        = link_to "(see more)", '#', :class => "see_more", :data => { :book_id => book[:id] }
+        .book_info{:style => 'display:none', :data => {:book_id => book[:id] } }
+          = "Show me!"
       %td
         = book[:your_review]
       %td

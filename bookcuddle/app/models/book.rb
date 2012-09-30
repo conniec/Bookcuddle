@@ -1,3 +1,5 @@
+require 'goodreads_api'
+
 class Book
   include Mongoid::Document
   field :goodreads_id, type: Integer
@@ -27,7 +29,7 @@ class Book
       puts book_info
 
       return false if book_info == {}
-      
+
       #Create a book in model
       @book = Book.new(book_info)
       @book.goodreads_id = goodreads_id
@@ -39,5 +41,4 @@ class Book
     def create_connection
       @gr_connection = API::Goodreads.new(session[:access_token], session[:access_token_secret])
     end
-
 end
