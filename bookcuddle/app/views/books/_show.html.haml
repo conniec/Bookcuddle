@@ -1,0 +1,5 @@
+%p
+  ="#{ @book[:image_url].inspect }" #the image_url attribute includes 3 urls...
+  =simple_format(@book[:description])
+%p
+  = "Pub. Year: #{ @book[:publication_year] } - Pages: #{ @book[:num_pages] } - Rating: #{ @book[:average_rating] }"
