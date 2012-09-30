@@ -130,6 +130,15 @@ module API
       end
     end
 
+    def add_status(params)
+      puts params
+      res = post_status(params)
+      if res.empty?
+        false
+      end
+      true
+    end
+
     private
       def set_consumer
         OAuth::Consumer.new(APP_CONFIG['goodreads_key'],
@@ -229,6 +238,29 @@ module API
           data = response.body
         end
         {:code => response.code, :data => response.body}
+      end
+
+      def post_status(params)
+        token = set_access_token(@access_token, @access_token_secret)
+
+        #Make sure params includes a book_id
+        return {} if !params.has_key?("book_id")
+
+        #Make sure params has a page or percent update
+        if params.has_key("percent") || params.has_key("page")
+          response = token.post("http://www.goodreads.com/user_status.xml", {
+                                  'user_status[book_id]' => params[:book_id],
+                                  'user_status[page]' => params[:page],
+                                  'user_status[percent]' => params[:percent],
+                                  'user_status[body]' => params[:body]
+            })
+          data = ''
+          if response.code == '200'
+            data = response.body
+          end
+          {:code => response.code, :data => response.body}
+        end
+        {}
       end
 
   end

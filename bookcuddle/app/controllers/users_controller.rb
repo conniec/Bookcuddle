@@ -90,6 +90,11 @@ class UsersController < ApplicationController
     @friend_goodreads_id = params[:friend_goodreads_id]
     @friend = User.find_by(goodreads_id: params[:friend_goodreads_id])
     @comparison = @gr_connection.get_unread_books(params[:friend_goodreads_id])
+
+    #Find books, if not found put books on queue to be created
+    @comparison.each do |book|
+      Book.find_or_create_by_goodreads(session[:access_token], session[:access_token_secret], book[:id])
+    end
   end
   
   private
