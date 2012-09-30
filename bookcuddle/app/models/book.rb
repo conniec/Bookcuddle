@@ -20,12 +20,13 @@ class Book
   def self.find_or_create_by_goodreads(access_token, access_token_secret, goodreads_id)
     #Get the book info from Goodreads
     puts 'creating a book!'
+    book_id = goodreads_id.to_i
     begin
       book = self.find_by(:goodreads_id => goodreads_id)
       book
     rescue
       @gr_connection = API::Goodreads.new(access_token, access_token_secret)
-      book_info = @gr_connection.get_book_info(goodreads_id)
+      book_info = @gr_connection.get_book_info(book_id)
       'here is my info!'
       puts book_info
 
@@ -33,7 +34,7 @@ class Book
       
       #Create a book in model
       @book = self.new(book_info)
-      @book.goodreads_id = goodreads_id
+      @book.goodreads_id = book_id
       @book.save
     end
   end
