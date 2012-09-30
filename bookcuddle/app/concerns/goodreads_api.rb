@@ -97,7 +97,7 @@ module API
       book_info[:num_pages] = book_xml.css('num_pages').text
       book_info[:average_rating] = book_xml.css('average_rating').text
       book_info[:publication_year] = book_xml.css('publication_year').text
-      book_info[:image_url] = book_xml.css('image_url').text
+      book_info[:image_url] = book_xml.css('image_url').first.text
 
       book_authors = []
       doc_authors = doc.xpath("//book//authors//author")
