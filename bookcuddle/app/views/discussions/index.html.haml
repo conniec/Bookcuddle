@@ -24,8 +24,12 @@
           %td
             = discussion.book.authors[0]['name']
           %td
-            %a{:href => "/compare/#{discussion.user_2}"}
-              = discussion.user_2_name
+            - if discussion.user_1 == current_user.id.to_s
+              %a{:href => "/compare/#{discussion.users[1].goodreads_id}"}
+                = discussion.user_2_name
+            - else
+              %a{:href => "/compare/#{discussion.users[0].goodreads_id}"}
+                = discussion.user_1_name
           %td.view
             = link_to 'View', discussion_path(discussion), :class => 'btn btn-primary'
             / = link_to raw('<i class="icon-comments-alt"></i> View'), discussion_path(discussion), :class => 'btn btn-primary'

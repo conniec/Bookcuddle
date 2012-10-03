@@ -7,8 +7,6 @@ class DiscussionsController < ApplicationController
   
   def index
     id = current_user.id
-    puts 'id'
-    puts id
     @user = User.find_by(id: id)
     @discussions = @user.discussions
   end
@@ -35,7 +33,7 @@ class DiscussionsController < ApplicationController
         friend_id = User.find_by(:goodreads_id => params[:friend_id]).id
         book_id = params[:id]
         users = [current_user_id, friend_id]
-        discussion_id = Discussion.where(:book_id => book_id, 
+        discussion_id = Discussion.where(:book_goodreads_id => book_id, 
                                          :user_1.in => users,
                                          :user_2.in => users).first.id
         puts 'found discussion'
