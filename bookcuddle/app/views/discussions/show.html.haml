@@ -20,7 +20,7 @@
 
       var $progress_form = $('#progress');
       $progress_form.submit(function() {
-        var page = $progress_form.find("#text")[0].value;
+        var page = $progress_form.find("#progress")[0].value;
         var book_id = $progress_form.attr("data-bookid");
         var data = 'page=' + page + '&book_id=' + book_id;
         var url = '/progress/';
@@ -56,9 +56,12 @@
 %form{:id => "progress", :data => {:bookid => "#{@discussion.book_goodreads_id}"} }
   %legend Update progress
   %span
-    %label I'm on page
-    %input{:placeholder => "page #", :type => "text", :id => 'text'}
-  %button.btn{:type => "submit", :id => 'quote_button'} Submit progress
+    %label{:style => 'display:inline;'} I'm on page
+    %input{:placeholder => "#", :type => "text", :id => 'progress', :style => 'width:50px'}
+    = "of " + @discussion.book.num_pages
+  %br
+  %button.btn{:type => "submit", :id => 'quote_button'}
+    Submit progress
 
 - if @status_1.empty? and @status_2.empty?
   No statuses to show! :(
