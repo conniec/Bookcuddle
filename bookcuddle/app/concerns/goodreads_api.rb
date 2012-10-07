@@ -124,12 +124,11 @@ module API
     end
 
     def add_status(params)
+      puts 'adding status'
       puts params
       res = post_status(params)
-      if res.empty?
-        false
-      end
-      true
+      puts res[:data]
+      res
     end
 
     private
@@ -244,10 +243,10 @@ module API
         token = set_access_token(@access_token, @access_token_secret)
 
         #Make sure params includes a book_id
-        return {} if !params.has_key?("book_id")
+        return {} if !params.has_key?(:book_id)
 
         #Make sure params has a page or percent update
-        if params.has_key("percent") || params.has_key("page")
+        if params.has_key?(:percent) || params.has_key?(:page)
           response = token.post("http://www.goodreads.com/user_status.xml", {
                                   'user_status[book_id]' => params[:book_id],
                                   'user_status[page]' => params[:page],
@@ -260,7 +259,6 @@ module API
           end
           {:code => response.code, :data => response.body}
         end
-        {}
       end
 
   end

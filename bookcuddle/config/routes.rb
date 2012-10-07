@@ -8,6 +8,7 @@ Bookcuddle::Application.routes.draw do
   resources :books, :only => [:create, :show]
   
   post 'quotes', to: 'discussions#quote', as: 'quote'
+  post 'progress', to: 'discussions#progress', as: 'progress'
   get 'friends', to: 'users#friends', as: 'friends'  
   get 'compare/:friend_goodreads_id', to:'users#compare', as:'compare'
   get 'signup', to: 'users#new', as: 'signup'

@@ -3,7 +3,7 @@ require 'goodreads_api'
 class DiscussionsController < ApplicationController
   include API
 
-  before_filter :create_connection, :only => [:show, :quote]
+  before_filter :create_connection, :only => [:show, :quote, :progress]
   
   def index
     id = current_user.id
@@ -34,6 +34,31 @@ class DiscussionsController < ApplicationController
     puts quote_params
 
     @response = @gr_connection.add_quote(quote_params)
+
+    respond_to do |format|
+      format.json {
+        render :json => @response.to_json
+      }
+    end
+  end
+
+  def progress
+    book_goodreads_id = params[:book_id]
+    page = params[:page]
+
+    begin
+      @book = Book.find_by(:goodreads_id => book_goodreads_id)
+    rescue
+      puts 'book does not exist, create it'
+    end
+
+    #Start creating params
+    progress_params = {}
+    progress_params[:page] = page
+    progress_params[:book_id] = book_goodreads_id
+    puts progress_params
+
+    @response = @gr_connection.add_status(progress_params)
 
     respond_to do |format|
       format.json {
