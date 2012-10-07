@@ -7,6 +7,7 @@ Bookcuddle::Application.routes.draw do
   resources :sessions, :only => [:create, :destroy]
   resources :books, :only => [:create, :show]
   
+  post 'quotes', to: 'books#add_quote', as: 'add_quote'
   get 'friends', to: 'users#friends', as: 'friends'  
   get 'compare/:friend_goodreads_id', to:'users#compare', as:'compare'
   get 'signup', to: 'users#new', as: 'signup'

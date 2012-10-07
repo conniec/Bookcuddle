@@ -1,3 +1,20 @@
+= content_for :head do
+  :javascript
+    $(document).ready( function() {
+      var $quote_form = $('#quote');
+      $quote_form.submit(function() {
+        alert('submit called');
+        var quote = $quote_form.find("#text")[0].value;
+        console.log(quote);
+        var data = 'body=' + quote + '&book_id=30594';
+        var url = '/quotes/';
+        $.ajax({ url: url,
+                 type: 'POST',
+                 data: data 
+                 });
+        return false;
+      });
+    });
 
 %h1
   %i.icon-book{:style => 'padding-top: 15px; padding-right: 15px;'}
@@ -12,9 +29,8 @@
 %form{:id => "quote"}
   %legend Add quote to Goodreads
   %label Add a quote
-  %textarea{:placeholder => "type something!", :type => "text", :id => 'text', :value=>"whee"}
-  %input{:placeholder => "Type something…", :type => "text", :id => 'text2', :value=>'wheeee'}
-    %button.btn{:type => "submit", :id => 'quote_button'} Submit quote
+  %textarea{:placeholder => "Enter your quote here", :type => "text", :id => 'text', :value=>"whee"}
+  %button.btn{:type => "submit", :id => 'quote_button'} Submit quote
 
 
 - if @status_1.empty? and @status_2.empty?

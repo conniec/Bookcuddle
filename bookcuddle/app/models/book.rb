@@ -16,6 +16,11 @@ class Book
   has_many :discussion
   attr_accessible :title, :image_url, :goodreads_id, :pub_year, :description, :average_rating, :num_pages, :authors
 
+  def get_author
+    if self.authors != []
+      self.authors[0]
+    end
+  end
 
   def self.find_or_create_by_goodreads(access_token, access_token_secret, goodreads_id)
     #Get the book info from Goodreads

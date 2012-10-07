@@ -227,14 +227,21 @@ module API
 
       def post_quote(params)
         token = set_access_token(@access_token, @access_token_secret)
-        response = token.post("http://www.goodreads.com/quotes.xml", {
-                                'quote[author_name]' => params[:author_name],
-                                'quote[author_id]' => params[:author_id],
-                                'quote[book_id]' => params[:book_id],
-                                'quote[body]' => params[:body]
-          })
+
+        #Make sure params includes a book_id
+        return {} if !params.has_key?(:book_id)
+
+        post_params = {}
+        post_params['quote[author_name]'] = params[:author_name]
+        post_params['quote[author_id]'] = params[:author_id]
+        post_params['quote[book_id]'] = params[:book_id]
+        post_params['quote[body]'] = params[:body]
+        puts post_params
+
+        response = token.post("http://www.goodreads.com/quotes.xml", post_params)
+
         data = ''
-        if response.code == '200'
+        if response.code == '200' or response.code == '201'
           data = response.body
         end
         {:code => response.code, :data => response.body}
