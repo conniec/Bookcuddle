@@ -119,15 +119,8 @@ module API
     #quote[body]: The quote! (required)
     #quote[tags]: Comma-separated tags
     def add_quote(params)
-      puts params
       res = post_quote(params)
-      if res[:code] == '200'
-        puts 'quoted posted successfully'
-        true
-      else
-        puts 'error, try again later?'
-        false
-      end
+      res
     end
 
     def add_status(params)

@@ -3,7 +3,7 @@ require 'goodreads_api'
 class DiscussionsController < ApplicationController
   include API
 
-  before_filter :create_connection, :only => [:show]
+  before_filter :create_connection, :only => [:show, :quote]
   
   def index
     id = current_user.id
@@ -16,12 +16,29 @@ class DiscussionsController < ApplicationController
   end
 
   def quote
-    if request.xhr?
-      begin
-        #Start posting quote to Goodreads
-        puts 'posting quote!!'
-      rescue
-      end
+    book_goodreads_id = params[:book_id]
+    body = params[:body]
+
+    begin
+      @book = Book.find_by(:goodreads_id => book_goodreads_id)
+    rescue
+      puts 'book does not exist, create it'
+    end
+
+    #Start creating params
+    quote_params = {}
+    quote_params[:author_name] = @book.get_author['name']
+    quote_params[:author_id] = @book.get_author['id']
+    quote_params[:body] = body
+    quote_params[:book_id] = book_goodreads_id
+    puts quote_params
+
+    @response = @gr_connection.add_quote(quote_params)
+
+    respond_to do |format|
+      format.json {
+        render :json => @response.to_json
+      }
     end
   end
 

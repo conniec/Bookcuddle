@@ -3,17 +3,38 @@
     $(document).ready( function() {
       var $quote_form = $('#quote');
       $quote_form.submit(function() {
-        alert('submit called');
         var quote = $quote_form.find("#text")[0].value;
-        console.log(quote);
-        var data = 'body=' + quote + '&book_id=30594';
+        var book_id = $quote_form.attr("data-bookid");
+        var data = 'body=' + quote + '&book_id=' + book_id;
         var url = '/quotes/';
         $.ajax({ url: url,
-                 type: 'POST',
-                 data: data 
-                 });
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function(data) {
+                  console.log('success!');
+                }
+              });
         return false;
       });
+
+      var $progress_form = $('#progress');
+      $progress_form.submit(function() {
+        var page = $progress_form.find("#text")[0].value;
+        var book_id = $progress_form.attr("data-bookid");
+        var data = 'page=' + page + '&book_id=' + book_id;
+        var url = '/progress/';
+        $.ajax({ url: url,
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function(data) {
+                  console.log('success!');
+                }
+              });
+        return false;
+      });
+
     });
 
 %h1
@@ -26,12 +47,18 @@
     %i.icon-user{:style => 'padding-top: 4px'}
     = @user_2.name
 
-%form{:id => "quote"}
+%form{:id => "quote", :data => {:bookid => "#{@discussion.book_goodreads_id}"} }
   %legend Add quote to Goodreads
   %label Add a quote
   %textarea{:placeholder => "Enter your quote here", :type => "text", :id => 'text', :value=>"whee"}
   %button.btn{:type => "submit", :id => 'quote_button'} Submit quote
 
+%form{:id => "progress", :data => {:bookid => "#{@discussion.book_goodreads_id}"} }
+  %legend Update progress
+  %span
+    %label I'm on page
+    %input{:placeholder => "page #", :type => "text", :id => 'text'}
+  %button.btn{:type => "submit", :id => 'quote_button'} Submit progress
 
 - if @status_1.empty? and @status_2.empty?
   No statuses to show! :(
