@@ -40,7 +40,7 @@
                 %ul.dropdown-menu.pull-right
                   %li
                     = link_to 'Edit Profile', edit_user_path(current_user)
-                    = link_to 'Goodreads Profile', '#'
+                    = link_to "Goodreads Profile", "http://goodreads.com/user/show/#{ current_user.goodreads_id }", :target => "_blank"
                     = link_to raw('Log out <i class="icon-off" style="padding-top:2px;"></i>'), logout_path
             - else
               #loginButton= link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post

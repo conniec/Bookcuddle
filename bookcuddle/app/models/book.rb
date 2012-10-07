@@ -16,6 +16,12 @@ class Book
 
   #before_filter :create_connection, :only => [:find_or_create_by_goodreads]
 
+  def get_author
+    if self.authors != []
+      self.authors[0]
+    end
+  end
+
   def self.find_or_create_by_goodreads(access_token, access_token_secret, goodreads_id)
     #Get the book info from Goodreads
     puts 'creating a book!'
