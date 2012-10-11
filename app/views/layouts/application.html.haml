@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+%html 
+  %head
+    %title Bookcuddle
+
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+    :javascript
+      $(document).ready( function() {
+        $('.dropdown-toggle').dropdown();
+      });
+
+    = yield :head
+
+
+
+  %body
+    %div.navbar
+      %div.navbar-inner
+        %a.brand{:href => "#"} Bookcuddle
+        %div.nav-collapse
+          %ul.nav
+            -if current_user
+              %li.dropdown
+                %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown', :target => '#'}}
+                  Profile
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    = link_to 'Edit Profile', edit_user_path(current_user)
+                    = link_to 'Goodreads Profile', '#'
+              %li
+                = link_to 'Friends', friends_path
+              %li
+                = link_to 'Discussions', discussions_path
+
+        %div.pull-right
+          - if current_user
+            Logged in!
+            = link_to "Log out", logout_path
+          - else
+            #loginButton= link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post
+
+    %div.container
+      = yield
+
+    %div#domMessage{:style => 'display:none;'}
+      %h1 We are default!
+
+
+
+
+
