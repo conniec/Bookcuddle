@@ -2,6 +2,6 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
-config.gem "mongo_mapper"
+#config.gem "mongo_mapper"
 
 Bookcuddle::Application.initialize!
