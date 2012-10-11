@@ -61,6 +61,7 @@ development:
 production:
   sessions:
     default:
+      database: bookcuddle_production
       uri: <%= ENV['MONGOHQ_URL'] %>
     options:
       skip_version_check: true
