@@ -4,7 +4,7 @@ class DiscussionsController < ApplicationController
   include API
 
   before_filter :create_connection, :only => [:show, :quote, :progress]
-  
+
   def index
     id = current_user.id
     @user = User.find_by(id: id)
@@ -70,33 +70,25 @@ class DiscussionsController < ApplicationController
   def show
     if request.xhr?
       begin
-        puts 'looking for book'
         current_user_id = current_user.id.to_s
         friend_id = User.find_by(:goodreads_id => params[:friend_id]).id
         book_id = params[:id]
         users = [current_user_id, friend_id]
-        discussion_id = Discussion.where(:book_goodreads_id => book_id, 
+        discussion_id = Discussion.where(:book_goodreads_id => book_id,
                                          :user_1.in => users,
                                          :user_2.in => users).first.id
-        puts 'found discussion'
         @discussion = { :discussion_id => discussion_id }
       rescue
-        puts 'did not discussion'
         @discussion = { :discussion_id => nil }
       end
     else
-      puts 'show discussion'
       @discussion = Discussion.find(params[:id])
-      puts '*' * 50
-      puts @discussion.inspect
       @user_1 = @discussion.users[0]
       @user_2 = @discussion.users[1]
       @book_id = @discussion.book_goodreads_id
 
       @status_1 = @gr_connection.get_user_book_status(@user_1.goodreads_id, @book_id)
       @status_2 = @gr_connection.get_user_book_status(@user_2.goodreads_id, @book_id)
-      puts @status_1
-      puts @status_2
     end
     respond_to do |format|
       format.html
@@ -115,7 +107,7 @@ class DiscussionsController < ApplicationController
       redirect_to friends_path
     end
     @discussion = Discussion.new
-    
+
     @discussion.users.push(user_1)
     @discussion.users.push(user_2)
     @discussion.user_1 = user_1.id
@@ -127,7 +119,7 @@ class DiscussionsController < ApplicationController
 
     book = Book.find_or_create_by_goodreads(session[:access_token], session[:access_token_secret], params[:book_id])
     @discussion.book = book
-    
+
     if @discussion.save
       flash[:success] = "New discussion created!"
       redirect_to discussion_path(@discussion)

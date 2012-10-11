@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-%html 
+%html
   %head
     %title Bookcuddle
 
@@ -17,36 +17,13 @@
 
 
   %body
-    %div.navbar
-      %div.navbar-inner
-        %a.brand{:href => "/"} Bookcuddle
-        %div.nav-collapse
-          %ul.nav
-            -if current_user
-              %li
-                = link_to 'Books', '#'
-              %li
-                = link_to 'Friends', friends_path
-              %li
-                = link_to 'Discussions', discussions_path
+    = render :partial => 'layouts/top_nav'
 
-        %div.pull-right
-          %ul.nav
-            - if current_user
-              %li.dropdown
-                %a{:href => '#', :class => 'dropdown-toggle', :data => {:toggle => 'dropdown', :target => '#'}}
-                  Profile
-                  %b.caret
-                %ul.dropdown-menu.pull-right
-                  %li
-                    = link_to 'Edit Profile', edit_user_path(current_user)
-                    = link_to "Goodreads Profile", "http://goodreads.com/user/show/#{ current_user.goodreads_id }", :target => "_blank"
-                    = link_to raw('Log out <i class="icon-off" style="padding-top:2px;"></i>'), logout_path
-            - else
-              #loginButton= link_to image_tag('goodreads-login-button.png'), sessions_path, :method => :post
 
     %div.container
       = yield
+      = render :partial => 'layouts/footer'
+
 
     %div#domMessage{:style => 'display:none;'}
       %h1 We are default!
