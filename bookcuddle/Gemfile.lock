@@ -40,6 +40,11 @@ GEM
       execjs
     coffee-script-source (1.3.3)
     daemons (1.1.9)
+    delayed_job (3.0.3)
+      activesupport (~> 3.0)
+    delayed_job_mongoid (2.0.0)
+      delayed_job (~> 3.0)
+      mongoid (~> 3.0)
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (1.4.0)
@@ -142,6 +147,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   coffee-rails (~> 3.2.1)
+  delayed_job_mongoid
   goodreads
   haml
   haml-rails

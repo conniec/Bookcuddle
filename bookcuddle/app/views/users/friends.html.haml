@@ -7,7 +7,7 @@
         function() {
           var that = $(this);
           var user_id = that.data('userid');
-          var url = '/users/' + user_id;
+          var url = '/users/' + user_id + '/?add_friend=1';
           console.log(url);
           $.ajax({ url: url, 
                   type: 'GET',
@@ -46,9 +46,10 @@
     });
 
 %h1
-  = "My Friends"
+  %i.icon-group{:style => 'padding-top: 15px; padding-right: 20px;'}
+  My Friends
 
-%table.table.table-striped
+%table.table.table-striped.table-bordered
   - @friends.each do |friend|
     %tr{:data => {:userid => friend[:goodreads_id]}}
       %td
@@ -61,6 +62,4 @@
         %a.btn Invite
 
 %div#domMessage{:style => 'display:none;'}
-  %h1 Please wait...
-  %div.progress.progress-striped{:style => 'width:60%;align:middle;'}
-    %div.bar{:style => "width: 60%;"}
+  %h2 Please wait...

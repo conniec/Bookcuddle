@@ -7,6 +7,13 @@
         function() {
           var that = $(this);
           var book_id = that.data('book_id');
+
+          // Stripping out the book creation ajax for now
+          // var book_url = '/books?id=' + book_id;
+          // $.ajax({ url: book_url,
+          //          dataType: 'json',
+          //          type: 'POST'});
+
           var friend_id = that.data('friend_id');
           var url = '/discussions/' + book_id + '?friend_id=' + friend_id;
           console.log(url);
@@ -44,9 +51,11 @@
       doAjax();
     });
 
-%h1= 'Compare Books with ' + @friend.name
+%h1
+  %i.icon-bookmark{:style => 'padding-top: 15px; padding-right: 15px;'}
+  = 'Compare Books with ' + @friend.name
 
-%table.table.table-striped
+%table.table.table-striped.table-bordered
   %thead
     %tr
       %td 
@@ -62,14 +71,15 @@
     %tr{:data => {:book_id => book[:id], :friend_id => @friend_goodreads_id } }  
       %td
         = link_to book[:title], book[:url]
+        = link_to "(see more)", '#', :class => "see_more", :data => { :book_id => book[:id] }
+        .book_info{:style => 'display:none', :data => {:book_id => book[:id] } }
+          = "Show me!"
       %td
         = book[:your_review]
       %td
         = book[:their_review]
       %td.discussion
-        = link_to "Start", discussions_path({:book_id => book[:id], :book_name => book[:title], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id}), :method => :post, :class => 'btn btn-primary'
+        = link_to "Start", discussions_path({:book_id => book[:id], :book_name => book[:title], :user_2 => @friend_goodreads_id, :user_1 => @current_user.goodreads_id}), :method => :post, :class => 'btn'
 
 %div#domMessage{:style => 'display:none;'}
-  %h1 Please wait...
-  %div.progress.progress-striped{:style => 'width:60%;align:middle;'}
-    %div.bar{:style => "width: 60%;"}
+  %h2 Please wait...

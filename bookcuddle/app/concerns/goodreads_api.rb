@@ -40,7 +40,8 @@ module API
       statuses.each do |status|
         book_statuses << { :percent => status.css('percent').text,
                             :created_at => status.css('created_at').text,
-                            :updated_at => status.css('updated_at').text}
+                            :updated_at => status.css('updated_at').text,
+                            :page => status.css('page').text }
       end
       book_statuses
     end
@@ -96,7 +97,7 @@ module API
       book_info[:num_pages] = book_xml.css('num_pages').text
       book_info[:average_rating] = book_xml.css('average_rating').text
       book_info[:publication_year] = book_xml.css('publication_year').text
-      book_info[:image_url] = book_xml.css('image_url').text
+      book_info[:image_url] = book_xml.css('image_url').first.text
 
       book_authors = []
       doc_authors = doc.xpath("//book//authors//author")
@@ -111,14 +112,24 @@ module API
       book_info
     end
 
-    # def get_user_status_updates(access_token, access_token_secret, goodreads_id)
-    #   user = user_info(access_token, access_token_secret, goodreads_id)
-    #   doc = Nokogiri::XML(user)
-    #   
-    #   status_updates = 
-    #   
-    #   connie.at_xpath("//updates//update[@type='userstatus']//action_text").content
-    # end
+    #params should be a dict containing the following:
+    #quote[author_name]: Name of the quote author (required)
+    #quote[author_id]: id of the author
+    #quote[book_id]: id of the book from which the quote was taken
+    #quote[body]: The quote! (required)
+    #quote[tags]: Comma-separated tags
+    def add_quote(params)
+      res = post_quote(params)
+      res
+    end
+
+    def add_status(params)
+      puts 'adding status'
+      puts params
+      res = post_status(params)
+      puts res[:data]
+      res
+    end
 
     private
       def set_consumer
@@ -204,7 +215,50 @@ module API
           data = response.body
         end
         {:code => response.code, :data => response.body}
+      end
 
+      def post_quote(params)
+        token = set_access_token(@access_token, @access_token_secret)
+
+        #Make sure params includes a book_id
+        return {} if !params.has_key?(:book_id)
+
+        post_params = {}
+        post_params['quote[author_name]'] = params[:author_name]
+        post_params['quote[author_id]'] = params[:author_id]
+        post_params['quote[book_id]'] = params[:book_id]
+        post_params['quote[body]'] = params[:body]
+        puts post_params
+
+        response = token.post("http://www.goodreads.com/quotes.xml", post_params)
+
+        data = ''
+        if response.code == '200' or response.code == '201'
+          data = response.body
+        end
+        {:code => response.code, :data => response.body}
+      end
+
+      def post_status(params)
+        token = set_access_token(@access_token, @access_token_secret)
+
+        #Make sure params includes a book_id
+        return {} if !params.has_key?(:book_id)
+
+        #Make sure params has a page or percent update
+        if params.has_key?(:percent) || params.has_key?(:page)
+          response = token.post("http://www.goodreads.com/user_status.xml", {
+                                  'user_status[book_id]' => params[:book_id],
+                                  'user_status[page]' => params[:page],
+                                  'user_status[percent]' => params[:percent],
+                                  'user_status[body]' => params[:body]
+            })
+          data = ''
+          if response.code == '200'
+            data = response.body
+          end
+          {:code => response.code, :data => response.body}
+        end
       end
 
   end

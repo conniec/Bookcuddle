@@ -15,9 +15,12 @@ class UsersController < ApplicationController
       goodreads_id = params[:id]
       begin
         @user = User.find_by(goodreads_id: goodreads_id.to_i)
+        if params[:add_friend] == '1'
+          puts 'adding friend!'
+          current_user.add_friend(@user)
+        end
         @user = {:goodreads_id => goodreads_id}
       rescue
-        puts 'failed to find'
         @user = {:goodreads_id => nil}
       end
     else
@@ -87,6 +90,11 @@ class UsersController < ApplicationController
     @friend_goodreads_id = params[:friend_goodreads_id]
     @friend = User.find_by(goodreads_id: params[:friend_goodreads_id])
     @comparison = @gr_connection.get_unread_books(params[:friend_goodreads_id])
+
+    #Find books, if not found put books on queue to be created
+    @comparison.each do |book|
+      Book.delay.find_or_create_by_goodreads(session[:access_token], session[:access_token_secret], book[:id])
+    end
   end
   
   private
