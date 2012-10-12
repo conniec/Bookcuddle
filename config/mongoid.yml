@@ -62,10 +62,6 @@ production:
   sessions:
     default:
       uri: 'mongodb://heroku:test@alex.mongohq.com:10004/app8337898'
-      #uri: <%= ENV['MONGOHQ_URL'] %>
-    options:
-      skip_version_check: true
-      safe: true
 
 test:
   sessions:
