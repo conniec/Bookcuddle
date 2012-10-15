@@ -101,6 +101,8 @@ GEM
       activesupport (= 3.2.8)
       bundler (~> 1.0)
       railties (= 3.2.8)
+    rails_emoji (1.6.1)
+      rails (>= 3.1.0)
     railties (3.2.8)
       actionpack (= 3.2.8)
       activesupport (= 3.2.8)
@@ -153,6 +155,7 @@ DEPENDENCIES
   pg
   quiet_assets
   rails (= 3.2.8)
+  rails_emoji (~> 1.6.1)
   sass-rails (~> 3.2.3)
   thin
   uglifier (>= 1.0.3)
