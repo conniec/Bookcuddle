@@ -1,19 +1,7 @@
-%h1 Listing users
+%div.hero-unit
+  %h1 
+    %i.icon-book{:style => 'padding-top: 28px; padding-right: 28px;'}
+    Bookcuddle
+    %small Read books together
 
-%table
-  %tr
-    %th Name
-    %th Email
-    %th
-    %th
-    %th
-
-  - @users.each do |user|
-    %tr
-      %td= user.name
-      %td= user.email
-      %td= link_to 'Show', user
-      %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
 
