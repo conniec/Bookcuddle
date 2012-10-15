@@ -16,6 +16,7 @@ gem 'goodreads'
 gem "bcrypt-ruby", :require => "bcrypt"
 gem 'nokogiri'
 gem 'httparty'
+gem 'rails_emoji', '~> 1.6.1'
 
 gem 'mongoid', '~> 3.0.2'
 
