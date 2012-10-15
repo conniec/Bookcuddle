@@ -24,7 +24,7 @@
           %td
             = discussion.book.authors[0]['name']
           %td
-            - if discussion.user_1 == current_user.id.to_s
+            - if discussion.user_1.to_s == current_user.id.to_s
               %a{:href => "/compare/#{discussion.users[1].goodreads_id}"}
                 = discussion.user_2_name
             - else
