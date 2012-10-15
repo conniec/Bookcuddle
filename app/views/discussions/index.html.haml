@@ -1,17 +1,19 @@
-%h1 
-  = "My Discussions"
+%h1
+  %i.icon-comments-alt{:style => 'padding-top: 15px; padding-right: 20px;'}
+  %span
+    My Discussions
 
 %div.discussions-list
-  %table.table.table-striped
+  %table.table.table-striped.table-bordered
     %thead
       %tr
-        %td 
+        %td
           %b Book Title
         %td
           %b Book Author
-        %td 
+        %td
           %b Your Friend
-        %td 
+        %td
           %b Discussion
 
     %tbody
@@ -20,8 +22,14 @@
           %td
             = discussion.book_name
           %td
-            = discussion.book_id
+            = discussion.book.authors[0]['name']
           %td
-            = discussion.user_2_name
+            - if discussion.user_1 == current_user.id.to_s
+              %a{:href => "/compare/#{discussion.users[1].goodreads_id}"}
+                = discussion.user_2_name
+            - else
+              %a{:href => "/compare/#{discussion.users[0].goodreads_id}"}
+                = discussion.user_1_name
           %td.view
-            = link_to "View", discussion_path(discussion), :class => 'btn btn-primary'
+            = link_to 'View', discussion_path(discussion), :class => 'btn btn-primary'
+            / = link_to raw('<i class="icon-comments-alt"></i> View'), discussion_path(discussion), :class => 'btn btn-primary'

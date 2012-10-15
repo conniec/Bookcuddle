@@ -1,3 +1,7 @@
+%h1
+  %i.icon-user{:style => 'padding-top: 12px; padding-right: 20px;'}
+  My Profile
+
 %p#notice= notice
 
 %p
@@ -7,6 +11,3 @@
   %b Email:
   = @user.email
 
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Back', users_path
