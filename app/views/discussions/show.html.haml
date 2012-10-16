@@ -1,0 +1,122 @@
+= content_for :head do
+  :javascript
+    $(document).ready( function() {
+      var $quote_form = $('#quote');
+      $quote_form.submit(function() {
+        var quote = $quote_form.find("#text")[0].value;
+        var book_id = $quote_form.attr("data-bookid");
+        var data = 'body=' + quote + '&book_id=' + book_id;
+        var url = '/quotes/';
+        $.ajax({ url: url,
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function(data) {
+                  console.log('success!');
+                }
+              });
+        return false;
+      });
+
+      var $progress_form = $('#progress');
+      $progress_form.submit(function() {
+        var page = $progress_form.find("#progress")[0].value;
+        var book_id = $progress_form.attr("data-bookid");
+        var data = 'page=' + page + '&book_id=' + book_id;
+        var url = '/progress/';
+        $.ajax({ url: url,
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function(data) {
+                  console.log('success!');
+                }
+              });
+        return false;
+      });
+
+    });
+
+%h1
+  %i.icon-book{:style => 'padding-top: 15px; padding-right: 15px;'}
+  %i.icon-comments{:style => 'padding-top: 15px; padding-right: 20px;'}
+  = @discussion.book_name
+.row
+  %h1
+    %small{:style => 'font-size: 0.5em;'}
+      .span3
+        %i.icon-user{:style => 'padding-top: 4px'}
+        = @user_1.name
+      .span3.offset1
+        %i.icon-user{:style => 'padding-top: 4px'}
+        = @user_2.name
+
+%br
+- if @status_1.empty? and @status_2.empty?
+  No statuses to show! :(
+- else
+  .status
+    %table.table
+      .progress-bars
+        %tr
+          %td.span3
+            %h4= @user_1.name
+          %td.span6
+            %div.progress
+              = @status_1[0][:percent] + "%"
+              %div.bar{:style => "width: #{@status_1[0][:percent]}%;"}
+        %tr
+          %td.span3
+            %h4= @user_2.name
+          %td.span6
+            .progress
+              = @status_2[0][:percent] + "%"
+              %div.bar{:style => "width: #{@status_2[0][:percent]}%;"}
+
+
+.row
+  .span6
+    %form{:id => "quote", :data => {:bookid => "#{@discussion.book_goodreads_id}"} }
+      %legend Add quote to Goodreads
+      %label Add a quote
+      %textarea{:placeholder => "Enter your quote here", :type => "text", :id => 'text', :value=>"whee"}
+      %button.btn{:type => "submit", :id => 'quote_button'} Submit quote
+
+  .span6
+    %form{:id => "progress", :data => {:bookid => "#{@discussion.book_goodreads_id}"} }
+      %legend Update progress
+      %span
+        %label{:style => 'display:inline;'} I'm on page
+        %input{:placeholder => "#", :type => "text", :id => 'progress', :style => 'width:50px'}
+        = "of " + @discussion.book.num_pages
+      %br
+      %button.btn{:type => "submit", :id => 'quote_button'}
+        Submit progress
+
+
+.row
+  .span6
+    %h3= @user_1.name
+    .progress
+      .bar{:style => "width: #{@status_1[0][:percent]}%;"}
+    %ul
+    - @status_1.each do |s|
+      %li
+        Percent:
+        = s[:percent]
+      %li
+        Date:
+        = formated_update_date(s[:created_at])
+
+  .span6
+    %h3= @user_2.name
+    %ul
+    .progress
+      .bar{:style => "width: #{@status_2[0][:percent]}%;"}
+    - @status_2.each do |s|
+      %li
+        Percent:
+        = s[:percent]
+      %li
+        Date:
+        = formated_update_date(s[:created_at])

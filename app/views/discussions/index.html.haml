@@ -1,0 +1,35 @@
+%h1
+  %i.icon-comments-alt{:style => 'padding-top: 15px; padding-right: 20px;'}
+  %span
+    My Discussions
+
+%div.discussions-list
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %td
+          %b Book Title
+        %td
+          %b Book Author
+        %td
+          %b Your Friend
+        %td
+          %b Discussion
+
+    %tbody
+      - @discussions.each do |discussion|
+        %tr{:data => {:discussion_id => discussion[:id]}}
+          %td
+            = discussion.book_name
+          %td
+            = discussion.book.authors[0]['name']
+          %td
+            - if discussion.users[1].id != current_user.id
+              %a{:href => "/compare/#{discussion.users[1].goodreads_id}"}
+                = discussion.users[1].name
+            - else
+              %a{:href => "/compare/#{discussion.users[0].goodreads_id}"}
+                = discussion.users[0].name
+          %td.view
+            = link_to 'View', discussion_path(discussion), :class => 'btn btn-primary'
+            / = link_to raw('<i class="icon-comments-alt"></i> View'), discussion_path(discussion), :class => 'btn btn-primary'
