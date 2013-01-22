@@ -1,7 +1,6 @@
 = content_for :head do
   :javascript
     function doAjax() {
-      console.log('overrode');
 
       $('tr').each(
         function() {
@@ -17,7 +16,7 @@
           var friend_id = that.data('friend_id');
           var url = '/discussions/' + book_id + '?friend_id=' + friend_id;
           console.log(url);
-          $.ajax({ url: url, 
+          $.ajax({ url: url,
                   type: 'GET',
                   dataType: 'json',
                   cache: false,
@@ -58,20 +57,20 @@
 %table.table.table-striped.table-bordered
   %thead
     %tr
-      %td 
+      %td
         %b Title
-      %td 
+      %td
         %b Your status
-      %td 
+      %td
         %b Friend status
       %td
         %b Discussion
   %tbody
   - @comparison.each do |book|
-    %tr{:data => {:book_id => book[:id], :friend_id => @friend_goodreads_id } }  
+    %tr{:data => {:book_id => book[:id], :friend_id => @friend_goodreads_id } }
       %td
         = link_to book[:title], book[:url]
-        = link_to "(see more)", '#', :class => "see_more", :data => { :book_id => book[:id] }
+        %span.small= link_to "(see more)", '#', :class => "see_more", :data => { :book_id => book[:id] }
         .book_info{:style => 'display:none', :data => {:book_id => book[:id] } }
           = "Show me!"
       %td

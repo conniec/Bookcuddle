@@ -1,10 +1,9 @@
 development:
-  goodreads_key: oLeXuyhixiL1lMwTsw3fw
-  goodreads_secret: Jmw8ybptcmxrxv6p0IyKeTMKSHCPZZ1DYv53bRomU
-
+  goodreads_key: tfazwyj7sz5VisCBxkdjQA
+  goodreads_secret: 3GReReULKjKhbaWyAt8d1EAKRnEc1rOQfpf32q1oxNk
 test:
-  goodreads_key: oLeXuyhixiL1lMwTsw3fw
-  goodreads_secret: Jmw8ybptcmxrxv6p0IyKeTMKSHCPZZ1DYv53bRomU
+  goodreads_key: tfazwyj7sz5VisCBxkdjQA
+  goodreads_secret: 3GReReULKjKhbaWyAt8d1EAKRnEc1rOQfpf32q1oxNk
 
 production:
   goodreads_key: oLeXuyhixiL1lMwTsw3fw

@@ -2,4 +2,11 @@
   = image_tag(@book[:image_url])
   = simple_format(@book[:description])
 %p
-  = "Pub. Year: #{ @book[:publication_year] } - Pages: #{ @book[:num_pages] } - Rating: #{ @book[:average_rating] }"
+  -if @book[:publication_year]
+    = "Pub. Year: #{ @book[:publication_year] } - "
+
+  -if @book[:num_pages]
+    = "Pages: #{ @book[:num_pages] } - "
+
+  -if @book[:average_rating]
+    = "Rating: #{ @book[:average_rating].to_f.round(2) }"
