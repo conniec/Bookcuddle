@@ -36,7 +36,7 @@ class Book
       puts book_info
 
       return false if book_info == {}
-      
+
       #Create a book in model
       @book = self.new(book_info)
       @book.goodreads_id = book_id
@@ -48,19 +48,4 @@ class Book
     def create_connection
       @gr_connection = API::Goodreads.new(session[:access_token], session[:access_token_secret])
     end
-
-  attr_accessible :title, :image_url, :goodreads_id, :title
-  
-  def self.find_or_fetch_from_goodreads(goodreads_book_id)
-    begin
-      self.find_by(:goodreads_id => goodreads_book_id)
-    rescue
-      self.fetch_from_goodreads(goodreads_book_id)
-    end
-  end
-  
-  def self.fetch_from_goodreads(goodreads_book_id)
-    self.create_connection
-    @gr_connection.get_book_info(goodreads_book_id)
-  end
 end
